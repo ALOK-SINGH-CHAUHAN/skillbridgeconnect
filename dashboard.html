@@ -3,22 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Dashboard | EduPlatform</title>
+    <title>SkillBridge Connect - Modern Dashboard</title>
     
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Dashboard CSS -->
     <link rel="stylesheet" href="dashboard.css">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
+    <!-- Glass Overlay for Mobile -->
+    <div class="glass-overlay" id="glassOverlay"></div>
+    
     <div class="app-container">
-        <!-- Sidebar -->
+        <!-- Top Navigation Bar -->
+        <nav class="top-navbar">
+            <div class="nav-brand">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="brand-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <span>SkillBridge Connect</span>
+            </div>
+            <div class="nav-actions">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSc0l3rpdortUs4fMUmAG9bzXX_LKeVFbblI5jAcLtnkBsaUJg/viewform?usp=sharing&ouid=102626287052810288310" target="_blank" class="google-form-btn">
+                    <i class="fab fa-google"></i>
+                    <span>Feedback Form</span>
+                </a>
+                <div class="user-profile" id="userProfile">
+                    <span id="userInitials">S</span>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Scroll Progress Indicator -->
+        <div class="scroll-indicator">
+            <div class="scroll-progress" id="scrollProgress"></div>
+        </div>
+        
+        <!-- Modern Sidebar -->
         <nav class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="logo">
-                    <i class="fas fa-graduation-cap"></i>
+                    <i class="fas fa-bridge"></i>
                 </div>
             </div>
             
@@ -28,24 +60,29 @@
                         <i class="fas fa-home"></i>
                     </a>
                 </li>
-                <li class="nav-item" data-tooltip="Courses">
+                <li class="nav-item" data-tooltip="My Courses">
                     <a href="#" class="nav-link" data-page="courses">
-                        <i class="fas fa-book"></i>
+                        <i class="fas fa-book-open"></i>
                     </a>
                 </li>
-                <li class="nav-item" data-tooltip="Streak">
+                <li class="nav-item" data-tooltip="Learning Streak">
                     <a href="#" class="nav-link" data-page="streak">
                         <i class="fas fa-fire"></i>
                     </a>
                 </li>
-                <li class="nav-item" data-tooltip="Catalogue">
+                <li class="nav-item" data-tooltip="Course Catalogue">
                     <a href="#" class="nav-link" data-page="catalogue">
-                        <i class="fas fa-th-large"></i>
+                        <i class="fas fa-store"></i>
                     </a>
                 </li>
             </ul>
             
             <div class="sidebar-footer">
+                <div class="nav-item" data-tooltip="Settings">
+                    <a href="#" class="nav-link" id="settingsBtn">
+                        <i class="fas fa-cog"></i>
+                    </a>
+                </div>
                 <div class="nav-item" data-tooltip="Logout">
                     <a href="#" class="nav-link" id="logoutBtn">
                         <i class="fas fa-sign-out-alt"></i>
@@ -55,104 +92,109 @@
         </nav>
 
         <!-- Main Content -->
-        <main class="main-content">
+        <main class="main-content" id="mainContent">
             <!-- Dashboard Page -->
             <div class="page-content active" id="dashboardPage">
                 <div class="page-header">
-                    <div class="welcome-section">
-                        <div class="greeting-card">
-                            <h2 class="greeting">Hello <span id="userName">Student</span></h2>
-                            <p class="greeting-subtitle">Ready to continue your learning journey?</p>
+                    <h1 class="page-title">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </h1>
+                </div>
+                
+                <div class="welcome-section">
+                    <div class="greeting-card">
+                        <h2 class="greeting">Hello <span id="userName">Student</span>!</h2>
+                        <p class="greeting-subtitle">Ready to continue your learning journey today?</p>
+                    </div>
+                    
+                    <div class="progress-overview">
+                        <div class="progress-circle-container">
+                            <div class="progress-circle" data-progress="37">
+                                <div class="progress-value">37%</div>
+                            </div>
+                            <span class="progress-label">Overall Progress</span>
                         </div>
                         
-                        <div class="progress-overview">
-                            <div class="progress-circle-container">
-                                <div class="progress-circle" data-progress="37">
-                                    <div class="progress-value">37%</div>
-                                </div>
-                                <span class="progress-label">Course Progress</span>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-number" id="activeCourses">3</div>
+                                <div class="stat-label">Active</div>
                             </div>
-                            
-                            <div class="stats-grid">
-                                <div class="stat-item">
-                                    <div class="stat-number" id="activeCourses">3</div>
-                                    <div class="stat-label">Active Courses</div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-number" id="completedCourses">12</div>
-                                    <div class="stat-label">Completed</div>
-                                </div>
+                            <div class="stat-item">
+                                <div class="stat-number" id="completedCourses">12</div>
+                                <div class="stat-label">Completed</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="dashboard-content">
-                    <section class="recent-courses">
-                        <h3 class="section-title">
-                            <i class="fas fa-clock me-2"></i>Recently Viewed Courses
-                        </h3>
-                        <div class="courses-grid">
-                            <div class="course-card">
-                                <div class="course-image">
-                                    <i class="fas fa-code"></i>
-                                </div>
-                                <div class="course-info">
-                                    <h4 class="course-title">Web Development Fundamentals</h4>
-                                    <p class="course-description">Learn HTML, CSS, and JavaScript basics</p>
-                                    <div class="course-progress">
-                                        <div class="progress-bar">
-                                            <div class="progress-fill" style="width: 65%"></div>
-                                        </div>
-                                        <span class="progress-text">65% Complete</span>
-                                    </div>
-                                </div>
+                <section class="recent-courses">
+                    <h3 class="section-title">
+                        <i class="fas fa-history"></i>
+                        Recently Viewed Courses
+                    </h3>
+                    <div class="courses-grid" id="recentCoursesGrid">
+                        <div class="course-card">
+                            <div class="course-image">
+                                <i class="fab fa-js-square"></i>
                             </div>
-                            
-                            <div class="course-card">
-                                <div class="course-image">
-                                    <i class="fas fa-database"></i>
-                                </div>
-                                <div class="course-info">
-                                    <h4 class="course-title">Database Design</h4>
-                                    <p class="course-description">Master SQL and database concepts</p>
-                                    <div class="course-progress">
-                                        <div class="progress-bar">
-                                            <div class="progress-fill" style="width: 40%"></div>
-                                        </div>
-                                        <span class="progress-text">40% Complete</span>
+                            <div class="course-info">
+                                <h4 class="course-title">Advanced JavaScript</h4>
+                                <p class="course-description">Master ES6+ features and async programming</p>
+                                <div class="course-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 75%"></div>
                                     </div>
-                                </div>
-                            </div>
-                            
-                            <div class="course-card">
-                                <div class="course-image">
-                                    <i class="fas fa-mobile-alt"></i>
-                                </div>
-                                <div class="course-info">
-                                    <h4 class="course-title">Mobile App Development</h4>
-                                    <p class="course-description">Build apps with React Native</p>
-                                    <div class="course-progress">
-                                        <div class="progress-bar">
-                                            <div class="progress-fill" style="width: 15%"></div>
-                                        </div>
-                                        <span class="progress-text">15% Complete</span>
-                                    </div>
+                                    <span class="progress-text">75%</span>
                                 </div>
                             </div>
                         </div>
-                    </section>
-                </div>
+                        
+                        <div class="course-card">
+                            <div class="course-image">
+                                <i class="fab fa-react"></i>
+                            </div>
+                            <div class="course-info">
+                                <h4 class="course-title">React Development</h4>
+                                <p class="course-description">Build modern web applications with React</p>
+                                <div class="course-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 50%"></div>
+                                    </div>
+                                    <span class="progress-text">50%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="course-card">
+                            <div class="course-image">
+                                <i class="fab fa-node-js"></i>
+                            </div>
+                            <div class="course-info">
+                                <h4 class="course-title">Node.js Backend</h4>
+                                <p class="course-description">Server-side development with Node.js</p>
+                                <div class="course-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 30%"></div>
+                                    </div>
+                                    <span class="progress-text">30%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
 
             <!-- Courses Page -->
             <div class="page-content" id="coursesPage">
                 <div class="page-header">
-                    <h2 class="page-title">
-                        <i class="fas fa-book me-2"></i>My Courses
-                    </h2>
+                    <h1 class="page-title">
+                        <i class="fas fa-book-open"></i>
+                        My Courses
+                    </h1>
                     <div class="course-toggle">
-                        <button class="toggle-btn active" data-type="active">Active</button>
+                        <button class="toggle-btn active" data-type="active">Active Courses</button>
                         <button class="toggle-btn" data-type="completed">Completed</button>
                     </div>
                 </div>
@@ -170,12 +212,13 @@
             <!-- Streak Page -->
             <div class="page-content" id="streakPage">
                 <div class="page-header">
-                    <h2 class="page-title">
-                        <i class="fas fa-fire me-2"></i>Learning Streak
-                    </h2>
+                    <h1 class="page-title">
+                        <i class="fas fa-fire"></i>
+                        Learning Streak
+                    </h1>
                     <div class="streak-stats">
-                        <div class="streak-number">15</div>
-                        <div class="streak-label">Days Streak</div>
+                        <div class="streak-number" id="currentStreak">15</div>
+                        <div class="streak-label">Day Streak</div>
                     </div>
                 </div>
                 
@@ -198,9 +241,10 @@
             <!-- Catalogue Page -->
             <div class="page-content" id="cataloguePage">
                 <div class="page-header">
-                    <h2 class="page-title">
-                        <i class="fas fa-th-large me-2"></i>Course Catalogue
-                    </h2>
+                    <h1 class="page-title">
+                        <i class="fas fa-store"></i>
+                        Course Catalogue
+                    </h1>
                     <div class="search-bar">
                         <i class="fas fa-search"></i>
                         <input type="text" placeholder="Search courses..." id="courseSearch">
@@ -208,7 +252,7 @@
                 </div>
                 
                 <div class="catalogue-filters">
-                    <button class="filter-btn active" data-category="all">All</button>
+                    <button class="filter-btn active" data-category="all">All Courses</button>
                     <button class="filter-btn" data-category="programming">Programming</button>
                     <button class="filter-btn" data-category="design">Design</button>
                     <button class="filter-btn" data-category="business">Business</button>
@@ -219,12 +263,104 @@
                     <!-- Available courses will be loaded here -->
                 </div>
             </div>
+            
+            <!-- Teacher Dashboard (Hidden by default) -->
+            <div class="page-content" id="teacherDashboardPage" style="display: none;">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        Teacher Dashboard
+                    </h1>
+                </div>
+                
+                <div class="welcome-section">
+                    <div class="greeting-card">
+                        <h2 class="greeting">Welcome back, <span id="teacherUserName">Teacher</span>!</h2>
+                        <p class="greeting-subtitle">Manage your courses and track student progress</p>
+                    </div>
+                    
+                    <div class="progress-overview">
+                        <div class="teacher-stats">
+                            <div class="stat-item">
+                                <div class="stat-number" id="totalStudents">156</div>
+                                <div class="stat-label">Total Students</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number" id="activeCoursesTaught">8</div>
+                                <div class="stat-label">Active Courses</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number" id="avgRating">4.8</div>
+                                <div class="stat-label">Avg Rating</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <section class="recent-courses">
+                    <h3 class="section-title">
+                        <i class="fas fa-chart-line"></i>
+                        Course Performance
+                    </h3>
+                    <div class="courses-grid" id="teacherCoursesGrid">
+                        <!-- Teacher courses will be loaded here -->
+                    </div>
+                </section>
+            </div>
         </main>
     </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Dashboard JS -->
     <script src="dashboard.js"></script>
+    
+    <!-- Initialize App -->
+    <script>
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load user data and determine dashboard type
+            const user = JSON.parse(localStorage.getItem('skillbridge_user') || '{}');
+            
+            if (user && user.user_type === 'teacher') {
+                // Show teacher dashboard
+                document.getElementById('dashboardPage').style.display = 'none';
+                document.getElementById('teacherDashboardPage').style.display = 'block';
+                document.getElementById('teacherDashboardPage').classList.add('active');
+                document.getElementById('teacherUserName').textContent = user.username || 'Teacher';
+            } else {
+                // Show student dashboard (default)
+                document.getElementById('userName').textContent = user.username || 'Student';
+            }
+            
+            // Set user initials in profile
+            const initials = (user.username || 'S').charAt(0).toUpperCase();
+            document.getElementById('userInitials').textContent = initials;
+            
+            // Setup mobile menu
+            const mobileToggle = document.getElementById('mobileMenuToggle');
+            const sidebar = document.getElementById('sidebar');
+            const glassOverlay = document.getElementById('glassOverlay');
+            
+            mobileToggle?.addEventListener('click', function() {
+                sidebar.classList.toggle('open');
+                glassOverlay.classList.toggle('sidebar-open');
+            });
+            
+            glassOverlay?.addEventListener('click', function() {
+                sidebar.classList.remove('open');
+                glassOverlay.classList.remove('sidebar-open');
+            });
+            
+            // Setup scroll progress
+            const mainContent = document.getElementById('mainContent');
+            const scrollProgress = document.getElementById('scrollProgress');
+            
+            mainContent?.addEventListener('scroll', function() {
+                const scrollTop = this.scrollTop;
+                const scrollHeight = this.scrollHeight - this.clientHeight;
+                const scrollPercentage = (scrollTop / scrollHeight) * 100;
+                scrollProgress.style.width = scrollPercentage + '%';
+            });
+        });
+    </script>
 </body>
 </html>
