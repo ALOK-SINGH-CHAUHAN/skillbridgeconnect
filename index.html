@@ -3,266 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShaktiPath - Empowering Lives Through Education</title>
+    <title>SkillBridge Connect</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="nav-logo">
-                <h2>ShaktiPath</h2>
-                <span class="tagline">Empowering Lives</span>
+            <div class="nav-left">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <div class="connection-nodes">
+                            <div class="node"></div>
+                            <div class="node"></div>
+                            <div class="node"></div>
+                            <div class="node center-node"></div>
+                        </div>
+                        <div class="bridge-arc"></div>
+                    </div>
+                </div>
+                <div class="brand-name">
+                    <span class="brand-skill">SKILL</span><span class="brand-bridge">BRIDGE</span><br>
+                    <span class="brand-connect">CONNECT</span>
+                </div>
             </div>
-            <ul class="nav-menu">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About Us</a></li>
-                <li><a href="#contact" class="nav-link">Contact Us</a></li>
-                <li><a href="#ticket" class="nav-link">Raise Ticket</a></li>
-                <li><a href="/login" class="nav-link get-started-btn">Get Started</a></li>
-            </ul>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="contact.html" class="nav-link">Contact Us</a>
+            </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
+    <main class="hero-section">
         <div class="hero-content">
-            <h1>Empowering Disabled Individuals Through Quality Education</h1>
-            <p>Join ShaktiPath and discover specialized courses designed to unlock potential, build skills, and create opportunities for people with disabilities.</p>
-            <button class="cta-button" onclick="window.location.href='/login'">Start Your Journey</button>
+            <div class="hero-text-container">
+                <h1 class="hero-heading">
+                    <div class="hero-line">
+                        <span class="hero-word" data-word="SKILL">SKILL</span>
+                        <span class="hero-word" data-word="BRIDGE">BRIDGE</span>
+                    </div>
+                    <div class="hero-line">
+                        <span class="hero-word" data-word="CONNECT">CONNECT</span>
+                    </div>
+                </h1>
+                <div class="hero-subheading-container">
+                    <p class="hero-subheading">
+                        <span class="typing-text">Where Curiosity Meets Guidance</span>
+                        <span class="cursor">|</span>
+                    </p>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number" data-target="1000">0</span>
+                    <span class="stat-label">Learners</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="250">0</span>
+                    <span class="stat-label">Mentors</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="500">0</span>
+                    <span class="stat-label">Courses</span>
+                </div>
+            </div>
+            <button class="cta-button" id="getStartedBtn">
+                <span class="button-text">Get Started</span>
+                <span class="button-icon">→</span>
+            </button>
         </div>
-        <div class="hero-stats">
-            <div class="stat">
-                <h3>500+</h3>
-                <p>Students Empowered</p>
+    </main>
+
+    <!-- Key Features Section -->
+    <section class="features-section">
+        <div class="features-container">
+            <div class="section-header">
+                <h2 class="section-title">Transforming Education Through Connection</h2>
+                <p class="section-subtitle">Discover the powerful features that make learning accessible, engaging, and impactful</p>
             </div>
-            <div class="stat">
-                <h3>25+</h3>
-                <p>Specialized Courses</p>
-            </div>
-            <div class="stat">
-                <h3>95%</h3>
-                <p>Success Rate</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <div class="feature-content">
+                        <h3>Course Marketplace</h3>
+                        <p>Browse and learn from free courses uploaded by mentors. Access a vast library of knowledge across diverse subjects and skill levels.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <div class="feature-content">
+                        <h3>1-on-1 Mentorship</h3>
+                        <p>Connect directly with professionals for guidance. Get personalized advice and accelerate your learning journey with expert mentors.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💳</div>
+                    <div class="feature-content">
+                        <h3>Transparent Sponsorships</h3>
+                        <p>Every donation directly funds a learner's journey. See exactly how your contribution makes a difference in someone's education.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-content">
+                        <h3>Gamified Learning</h3>
+                        <p>Track progress with streaks, badges, and points. Stay motivated and engaged with interactive learning experiences and achievements.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- About Us Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2>About ShaktiPath</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>ShaktiPath is a dedicated social service platform committed to empowering individuals with disabilities through comprehensive educational programs and skill development courses.</p>
-                    <p>Our mission is to break barriers, create inclusive learning environments, and provide equal opportunities for personal and professional growth.</p>
-                    <div class="mission-values">
-                        <div class="value-item">
-                            <h4>🎯 Our Mission</h4>
-                            <p>To provide accessible, high-quality education that empowers disabled individuals to achieve their full potential.</p>
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="testimonials-container">
+            <div class="section-header">
+                <h2 class="section-title">Success Stories</h2>
+                <p class="section-subtitle">Hear from learners and mentors who've transformed their careers through SkillBridge Connect</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"SkillBridge Connect completely changed my career trajectory. The mentorship I received was invaluable, and the courses helped me land my dream job in tech."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <h4>Sarah Chen</h4>
+                            <span>Software Developer</span>
                         </div>
-                        <div class="value-item">
-                            <h4>💡 Our Vision</h4>
-                            <p>A world where disability is not a barrier to education, employment, and social participation.</p>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"As a mentor, I love how easy it is to share my knowledge and see the direct impact on learners. The platform makes meaningful connections possible."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <h4>Marcus Rodriguez</h4>
+                            <span>Senior Data Scientist</span>
                         </div>
-                        <div class="value-item">
-                            <h4>❤️ Our Values</h4>
-                            <p>Inclusivity, Accessibility, Empowerment, and Dignity for all learners.</p>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"The transparency in sponsorships is amazing. I can see exactly how my donations help learners, and the progress tracking keeps me engaged."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <h4>Emily Watson</h4>
+                            <span>Education Sponsor</span>
                         </div>
                     </div>
                 </div>
-                <div class="about-features">
-                    <div class="feature">
-                        <h4>Accessible Learning</h4>
-                        <p>Courses designed with accessibility in mind, supporting various disabilities and learning needs.</p>
-                    </div>
-                    <div class="feature">
-                        <h4>Expert Instructors</h4>
-                        <p>Qualified professionals experienced in inclusive education and disability support.</p>
-                    </div>
-                    <div class="feature">
-                        <h4>Community Support</h4>
-                        <p>A supportive community of learners, mentors, and advocates working together.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Get Started Section -->
-    <section id="get-started" class="get-started">
-        <div class="container">
-            <h2>Get Started with ShaktiPath</h2>
-            <p>Begin your educational journey with our specialized programs designed for your success.</p>
-            <div class="course-categories">
-                <div class="category">
-                    <h3>Digital Skills</h3>
-                    <p>Learn computer basics, internet navigation, and digital communication tools.</p>
-                    <button class="category-btn">Explore Courses</button>
-                </div>
-                <div class="category">
-                    <h3>Life Skills</h3>
-                    <p>Develop essential daily living skills and personal development techniques.</p>
-                    <button class="category-btn">Explore Courses</button>
-                </div>
-                <div class="category">
-                    <h3>Professional Skills</h3>
-                    <p>Build job-ready skills for various career paths and employment opportunities.</p>
-                    <button class="category-btn">Explore Courses</button>
-                </div>
-                <div class="category">
-                    <h3>Creative Arts</h3>
-                    <p>Express yourself through art, music, writing, and other creative mediums.</p>
-                    <button class="category-btn">Explore Courses</button>
-                </div>
-            </div>
-            <div class="enrollment-process">
-                <h3>How to Get Started</h3>
-                <div class="steps">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <h4>Assessment</h4>
-                        <p>Complete our initial assessment to understand your needs and goals.</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <h4>Course Selection</h4>
-                        <p>Choose from our range of accessible courses tailored to your interests.</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <h4>Learn & Grow</h4>
-                        <p>Begin your learning journey with support from our dedicated team.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Us Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2>Contact Us</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <h4>📍 Address</h4>
-                        <p>123 Accessibility Lane<br>Inclusive City, IC 12345</p>
-                    </div>
-                    <div class="contact-item">
-                        <h4>📞 Phone</h4>
-                        <p>+1 (555) 123-4567<br>TTY: +1 (555) 123-4568</p>
-                    </div>
-                    <div class="contact-item">
-                        <h4>✉️ Email</h4>
-                        <p>info@shaktipath.org<br>support@shaktipath.org</p>
-                    </div>
-                    <div class="contact-item">
-                        <h4>🕒 Hours</h4>
-                        <p>Mon - Fri: 9:00 AM - 6:00 PM<br>Sat: 10:00 AM - 4:00 PM</p>
-                    </div>
-                </div>
-                <div class="contact-form">
-                    <h3>Send Us a Message</h3>
-                    <form id="contactForm">
-                        <input type="text" name="name" placeholder="Your Name" required>
-                        <input type="email" name="email" placeholder="Your Email" required>
-                        <input type="tel" name="phone" placeholder="Your Phone (Optional)">
-                        <select name="subject" required>
-                            <option value="">Select Subject</option>
-                            <option value="course-inquiry">Course Inquiry</option>
-                            <option value="accessibility">Accessibility Support</option>
-                            <option value="general">General Information</option>
-                            <option value="partnership">Partnership</option>
-                        </select>
-                        <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
-                        <button type="submit" class="submit-btn">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Raise Ticket Section -->
-    <section id="ticket" class="ticket">
-        <div class="container">
-            <h2>Raise a Support Ticket</h2>
-            <p>Need help? Submit a support ticket and our team will assist you promptly.</p>
-            <div class="ticket-form">
-                <form id="ticketForm">
-                    <div class="form-row">
-                        <input type="text" name="fullname" placeholder="Full Name" required>
-                        <input type="email" name="email" placeholder="Email Address" required>
-                    </div>
-                    <div class="form-row">
-                        <select name="priority" required>
-                            <option value="">Priority Level</option>
-                            <option value="low">Low</option>
-                            <option value="medium">Medium</option>
-                            <option value="high">High</option>
-                            <option value="urgent">Urgent</option>
-                        </select>
-                        <select name="category" required>
-                            <option value="">Issue Category</option>
-                            <option value="technical">Technical Issue</option>
-                            <option value="course">Course Related</option>
-                            <option value="accessibility">Accessibility Support</option>
-                            <option value="billing">Billing Question</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    <input type="text" name="subject" placeholder="Ticket Subject" required>
-                    <textarea name="description" placeholder="Describe your issue in detail..." rows="6" required></textarea>
-                    <div class="file-upload">
-                        <label for="attachment">Attach File (Optional):</label>
-                        <input type="file" id="attachment" name="attachment" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx">
-                    </div>
-                    <button type="submit" class="submit-btn">Submit Ticket</button>
-                </form>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
+        <div class="footer-container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>ShaktiPath</h3>
-                    <p>Empowering disabled individuals through quality education and inclusive learning opportunities.</p>
-                    <div class="social-links">
-                        <a href="#" class="social-link">Facebook</a>
-                        <a href="#" class="social-link">Twitter</a>
-                        <a href="#" class="social-link">LinkedIn</a>
-                        <a href="#" class="social-link">YouTube</a>
+                    <div class="footer-logo">
+                        <div class="logo">
+                            <div class="logo-icon">
+                                <div class="connection-nodes">
+                                    <div class="node"></div>
+                                    <div class="node"></div>
+                                    <div class="node"></div>
+                                    <div class="node center-node"></div>
+                                </div>
+                                <div class="bridge-arc"></div>
+                            </div>
+                        </div>
+                        <div class="brand-name">
+                            <span class="brand-skill">SKILL</span><span class="brand-bridge">BRIDGE</span><br>
+                            <span class="brand-connect">CONNECT</span>
+                        </div>
                     </div>
+                    <p class="footer-description">Connecting learners with mentors to bridge the gap between curiosity and expertise. Empowering education through meaningful relationships.</p>
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#get-started">Get Started</a></li>
-                        <li><a href="#contact">Contact Us</a></li>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="auth.html">Get Started</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a href="#ticket">Raise Ticket</a></li>
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Accessibility</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
+                    <h4>For Learners</h4>
+                    <ul class="footer-links">
+                        <li><a href="auth.html">Browse Courses</a></li>
+                        <li><a href="auth.html">Find Mentors</a></li>
+                        <li><a href="auth.html">Track Progress</a></li>
+                        <li><a href="auth.html">Success Stories</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Contact Info</h4>
-                    <p>📞 +1 (555) 123-4567</p>
-                    <p>✉️ info@shaktipath.org</p>
-                    <p>📍 123 Accessibility Lane<br>Inclusive City, IC 12345</p>
+                    <h4>For Mentors</h4>
+                    <ul class="footer-links">
+                        <li><a href="auth.html">Become a Mentor</a></li>
+                        <li><a href="auth.html">Upload Courses</a></li>
+                        <li><a href="auth.html">Mentor Dashboard</a></li>
+                        <li><a href="auth.html">Community Guidelines</a></li>
+                    </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 ShaktiPath. All rights reserved. | Making education accessible for everyone.</p>
+                <p>&copy; 2024 SkillBridge Connect. All rights reserved. Empowering education through connection.</p>
             </div>
         </div>
     </footer>

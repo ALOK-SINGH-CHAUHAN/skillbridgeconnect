@@ -3,383 +3,360 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShaktiPath - Dashboard</title>
-    <link rel="stylesheet" href="dashboard-styles.css">
+    <title>SkillBridge Connect - Modern Dashboard</title>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Dashboard CSS -->
+    <link rel="stylesheet" href="dashboard.css">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
-    <div class="container">
-        <!-- Navigation Bar -->
-        <nav class="navbar">
-            <div class="nav-container">
-                <div class="nav-logo">
-                    <h2>ShaktiPath</h2>
-                    <span class="tagline">Dashboard</span>
+    <!-- Glass Overlay for Mobile -->
+    <div class="glass-overlay" id="glassOverlay"></div>
+    
+    <div class="app-container">
+        <!-- Top Navigation Bar -->
+        <nav class="top-navbar">
+            <div class="nav-brand">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="brand-icon">
+                    <i class="fas fa-graduation-cap"></i>
                 </div>
-                <ul class="nav-menu">
-                    <li><a href="#overview" class="nav-link active">Overview</a></li>
-                    <li><a href="#courses" class="nav-link">My Courses</a></li>
-                    <li><a href="#browse" class="nav-link">Browse Courses</a></li>
-                    <li><a href="#progress" class="nav-link">Progress</a></li>
-                    <li><a href="#support" class="nav-link">Support</a></li>
-                </ul>
-                <div class="user-menu">
-                    <span id="userWelcome">Welcome!</span>
-                    <div class="user-actions">
-                        <button class="profile-btn" onclick="showProfile()">Profile</button>
-                        <button class="logout-btn" onclick="logout()">Logout</button>
-                    </div>
+                <span>SkillBridge Connect</span>
+            </div>
+            <div class="nav-actions">
+                <div class="user-profile" id="userProfile">
+                    <span id="userInitials">S</span>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Scroll Progress Indicator -->
+        <div class="scroll-indicator">
+            <div class="scroll-progress" id="scrollProgress"></div>
+        </div>
+        
+        <!-- Modern Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-bridge"></i>
+                </div>
+            </div>
+            
+            <ul class="sidebar-nav">
+                <li class="nav-item active" data-tooltip="Dashboard">
+                    <a href="#" class="nav-link" data-page="dashboard">
+                        <i class="fas fa-home"></i>
+                    </a>
+                </li>
+                <li class="nav-item" data-tooltip="My Courses">
+                    <a href="#" class="nav-link" data-page="courses">
+                        <i class="fas fa-book-open"></i>
+                    </a>
+                </li>
+                <li class="nav-item" data-tooltip="Learning Streak">
+                    <a href="#" class="nav-link" data-page="streak">
+                        <i class="fas fa-fire"></i>
+                    </a>
+                </li>
+                <li class="nav-item" data-tooltip="Course Catalogue">
+                    <a href="#" class="nav-link" data-page="catalogue">
+                        <i class="fas fa-store"></i>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <div class="nav-item" data-tooltip="Settings">
+                    <a href="#" class="nav-link" id="settingsBtn">
+                        <i class="fas fa-cog"></i>
+                    </a>
+                </div>
+                <div class="nav-item" data-tooltip="Logout">
+                    <a href="#" class="nav-link" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
                 </div>
             </div>
         </nav>
 
         <!-- Main Content -->
-        <main class="main-content">
-            <!-- Overview Section -->
-            <section id="overview" class="content-section active">
-                <div class="dashboard-grid">
-                    <!-- Welcome Card -->
-                    <div class="card welcome-card">
-                        <h2>Welcome to Your Learning Journey!</h2>
-                        <p>Explore courses specifically designed for different accessibility needs and learning preferences.</p>
-                        <button class="cta-btn" onclick="showSection('browse')">Browse Courses</button>
+        <main class="main-content" id="mainContent">
+            <!-- Dashboard Page -->
+            <div class="page-content active" id="dashboardPage">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </h1>
+                </div>
+                
+                <div class="welcome-section">
+                    <div class="greeting-card">
+                        <h2 class="greeting">Hello <span id="userName">Student</span>!</h2>
+                        <p class="greeting-subtitle">Ready to continue your learning journey today?</p>
                     </div>
-
-                    <!-- Quick Stats -->
-                    <div class="card stats-card">
-                        <h3>Your Progress</h3>
-                        <div class="stats">
+                    
+                    <div class="progress-overview">
+                        <div class="progress-circle-container">
+                            <div class="progress-circle" data-progress="37">
+                                <div class="progress-value">37%</div>
+                            </div>
+                            <span class="progress-label">Overall Progress</span>
+                        </div>
+                        
+                        <div class="stats-grid">
                             <div class="stat-item">
-                                <span class="stat-number">0</span>
-                                <span class="stat-label">Courses Enrolled</span>
+                                <div class="stat-number" id="activeCourses">3</div>
+                                <div class="stat-label">Active</div>
                             </div>
                             <div class="stat-item">
-                                <span class="stat-number">0%</span>
-                                <span class="stat-label">Overall Progress</span>
+                                <div class="stat-number" id="completedCourses">12</div>
+                                <div class="stat-label">Completed</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="recent-courses">
+                    <h3 class="section-title">
+                        <i class="fas fa-history"></i>
+                        Recently Viewed Courses
+                    </h3>
+                    <div class="courses-grid" id="recentCoursesGrid">
+                        <div class="course-card">
+                            <div class="course-image">
+                                <i class="fab fa-js-square"></i>
+                            </div>
+                            <div class="course-info">
+                                <h4 class="course-title">Advanced JavaScript</h4>
+                                <p class="course-description">Master ES6+ features and async programming</p>
+                                <div class="course-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 75%"></div>
+                                    </div>
+                                    <span class="progress-text">75%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="course-card">
+                            <div class="course-image">
+                                <i class="fab fa-react"></i>
+                            </div>
+                            <div class="course-info">
+                                <h4 class="course-title">React Development</h4>
+                                <p class="course-description">Build modern web applications with React</p>
+                                <div class="course-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 50%"></div>
+                                    </div>
+                                    <span class="progress-text">50%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="course-card">
+                            <div class="course-image">
+                                <i class="fab fa-node-js"></i>
+                            </div>
+                            <div class="course-info">
+                                <h4 class="course-title">Node.js Backend</h4>
+                                <p class="course-description">Server-side development with Node.js</p>
+                                <div class="course-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 30%"></div>
+                                    </div>
+                                    <span class="progress-text">30%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Courses Page -->
+            <div class="page-content" id="coursesPage">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-book-open"></i>
+                        My Courses
+                    </h1>
+                    <div class="course-toggle">
+                        <button class="toggle-btn active" data-type="active">Active Courses</button>
+                        <button class="toggle-btn" data-type="completed">Completed</button>
+                    </div>
+                </div>
+                
+                <div class="courses-container">
+                    <div class="courses-grid" id="activeCoursesList">
+                        <!-- Active courses will be loaded here -->
+                    </div>
+                    <div class="courses-grid" id="completedCoursesList" style="display: none;">
+                        <!-- Completed courses will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Streak Page -->
+            <div class="page-content" id="streakPage">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-fire"></i>
+                        Learning Streak
+                    </h1>
+                    <div class="streak-stats">
+                        <div class="streak-number" id="currentStreak">15</div>
+                        <div class="streak-label">Day Streak</div>
+                    </div>
+                </div>
+                
+                <div class="streak-calendar">
+                    <div class="calendar-header">
+                        <button class="calendar-nav" id="prevMonth">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h3 class="calendar-month" id="calendarMonth">December 2024</h3>
+                        <button class="calendar-nav" id="nextMonth">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid">
+                        <!-- Calendar will be generated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Catalogue Page -->
+            <div class="page-content" id="cataloguePage">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-store"></i>
+                        Course Catalogue
+                    </h1>
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search courses..." id="courseSearch">
+                    </div>
+                </div>
+                
+                <div class="catalogue-filters">
+                    <button class="filter-btn active" data-category="all">All Courses</button>
+                    <button class="filter-btn" data-category="programming">Programming</button>
+                    <button class="filter-btn" data-category="design">Design</button>
+                    <button class="filter-btn" data-category="business">Business</button>
+                    <button class="filter-btn" data-category="data">Data Science</button>
+                </div>
+                
+                <div class="catalogue-grid" id="catalogueGrid">
+                    <!-- Available courses will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Teacher Dashboard (Hidden by default) -->
+            <div class="page-content" id="teacherDashboardPage" style="display: none;">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        Teacher Dashboard
+                    </h1>
+                </div>
+                
+                <div class="welcome-section">
+                    <div class="greeting-card">
+                        <h2 class="greeting">Welcome back, <span id="teacherUserName">Teacher</span>!</h2>
+                        <p class="greeting-subtitle">Manage your courses and track student progress</p>
+                    </div>
+                    
+                    <div class="progress-overview">
+                        <div class="teacher-stats">
+                            <div class="stat-item">
+                                <div class="stat-number" id="totalStudents">156</div>
+                                <div class="stat-label">Total Students</div>
                             </div>
                             <div class="stat-item">
-                                <span class="stat-number">0</span>
-                                <span class="stat-label">Certificates Earned</span>
+                                <div class="stat-number" id="activeCoursesTaught">8</div>
+                                <div class="stat-label">Active Courses</div>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Recent Activity -->
-                    <div class="card activity-card">
-                        <h3>Recent Activity</h3>
-                        <div class="activity-list">
-                            <div class="activity-item">
-                                <div class="activity-icon">📚</div>
-                                <div class="activity-content">
-                                    <p><strong>Welcome to ShaktiPath!</strong></p>
-                                    <span class="activity-time">Just now</span>
-                                </div>
+                            <div class="stat-item">
+                                <div class="stat-number" id="avgRating">4.8</div>
+                                <div class="stat-label">Avg Rating</div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-
-            <!-- Browse Courses Section -->
-            <section id="browse" class="content-section">
-                <div class="section-header">
-                    <h2>Browse Courses by Accessibility Needs</h2>
-                    <p>Find courses specifically designed for different types of disabilities and learning preferences.</p>
-                </div>
-
-                <div class="disability-categories">
-                    <!-- Visual Impairment Courses -->
-                    <div class="disability-category">
-                        <div class="category-header">
-                            <div class="category-icon">👁️</div>
-                            <div class="category-info">
-                                <h3>Visual Impairment Courses</h3>
-                                <p>Courses designed with screen reader compatibility, audio descriptions, and high contrast interfaces.</p>
-                            </div>
-                        </div>
-                        <div class="course-grid">
-                            <div class="course-card" onclick="enrollCourse('Braille Reading Fundamentals')">
-                                <h4>Braille Reading Fundamentals</h4>
-                                <div class="course-features">
-                                    <span class="feature">Tactile Learning</span>
-                                    <span class="feature">Audio Support</span>
-                                </div>
-                                <div class="course-info">
-                                    <span class="duration">6 weeks</span>
-                                    <span class="level">Beginner</span>
-                                </div>
-                            </div>
-                            <div class="course-card" onclick="enrollCourse('Screen Reader Navigation')">
-                                <h4>Screen Reader Navigation</h4>
-                                <div class="course-features">
-                                    <span class="feature">JAWS Compatible</span>
-                                    <span class="feature">Voice Navigation</span>
-                                </div>
-                                <div class="course-info">
-                                    <span class="duration">4 weeks</span>
-                                    <span class="level">Intermediate</span>
-                                </div>
-                            </div>
-                            <div class="course-card" onclick="enrollCourse('Audio-First Web Design')">
-                                <h4>Audio-First Web Design</h4>
-                                <div class="course-features">
-                                    <span class="feature">Sound Design</span>
-                                    <span class="feature">Voice UI</span>
-                                </div>
-                                <div class="course-info">
-                                    <span class="duration">8 weeks</span>
-                                    <span class="level">Advanced</span>
-                                </div>
-                            </div>
-                        </div>
+                
+                <section class="recent-courses">
+                    <h3 class="section-title">
+                        <i class="fas fa-chart-line"></i>
+                        Course Performance
+                    </h3>
+                    <div class="courses-grid" id="teacherCoursesGrid">
+                        <!-- Teacher courses will be loaded here -->
                     </div>
-
-                    <!-- Hearing Impairment Courses -->
-                    <div class="disability-category">
-                        <div class="category-header">
-                            <div class="category-icon">👂</div>
-                            <div class="category-info">
-                                <h3>Hearing Impairment Courses</h3>
-                                <p>Visual learning with sign language interpretation, captions, and text-based communication.</p>
-                            </div>
-                        </div>
-                        <div class="course-grid">
-                            <div class="course-card" onclick="enrollCourse('Sign Language Basics')">
-                                <h4>Sign Language Basics</h4>
-                                <div class="course-features">
-                                    <span class="feature">Video Lessons</span>
-                                    <span class="feature">Visual Cues</span>
-                                </div>
-                                <div class="course-info">
-                                    <span class="duration">10 weeks</span>
-                                    <span class="level">Beginner</span>
-                                </div>
-                            </div>
-                            <div class="course-card" onclick="enrollCourse('Visual Programming')">
-                                <h4>Visual Programming</h4>
-                                <div class="course-features">
-                                    <span class="feature">Drag & Drop</span>
-                                    <span class="feature">Visual Logic</span>
-                                </div>
-                                <div class="course-info">
-                                    <span class="duration">12 weeks</span>
-                                    <span class="level">Intermediate</span>
-                                </div>
-                            </div>
-                            <div class="course-card" onclick="enrollCourse('Text-Based Communication')">
-                                <h4>Text-Based Communication</h4>
-                                <div class="course-features">
-                                    <span class="feature">Chat Systems</span>
-                                    <span class="feature">Written Skills</span>
-                                </div>
-                                <div class="course-info">
-                                    <span class="duration">6 weeks</span>
-                                    <span class="level">Beginner</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Cognitive Disability Courses -->
-                    <div class="disability-category">
-                        <div class="category-header">
-                            <div class="category-icon">🧠</div>
-                            <div class="category-info">
-                                <h3>Cognitive Disability Courses</h3>
-                                <p>Simplified interfaces, step-by-step learning, and memory-aid techniques.</p>
-                            </div>
-                        </div>
-                        <div class="course-grid">
-                            <div class="course-card" onclick="enrollCourse('Memory Improvement Techniques')">
-                                <h4>Memory Improvement Techniques</h4>
-                                <div class="course-features">
-                                    <span class="feature">Repetition Aids</span>
-                                    <span class="feature">Visual Memory</span>
-                                </div>
-                                <div class="course-info">
-                                    <span class="duration">8 weeks</span>
-                                    <span class="level">Beginner</span>
-                                </div>
-                            </div>
-                            <div class="course-card" onclick="enrollCourse('Simple Life Skills')">
-                                <h4>Simple Life Skills</h4>
-                                <div class="course-features">
-                                    <span class="feature">Step-by-Step</span>
-                                    <span class="feature">Practice Mode</span>
-                                </div>
-                                <div class="course-info">
-                                    <span class="duration">12 weeks</span>
-                                    <span class="level">Beginner</span>
-                                </div>
-                            </div>
-                            <div class="course-card" onclick="enrollCourse('Focus and Attention Training')">
-                                <h4>Focus and Attention Training</h4>
-                                <div class="course-features">
-                                    <span class="feature">Mindfulness</span>
-                                    <span class="feature">Concentration</span>
-                                </div>
-                                <div class="course-info">
-                                    <span class="duration">6 weeks</span>
-                                    <span class="level">Beginner</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Mobility Impairment Courses -->
-                    <div class="disability-category">
-                        <div class="category-header">
-                            <div class="category-icon">♿</div>
-                            <div class="category-info">
-                                <h3>Mobility Impairment Courses</h3>
-                                <p>Voice-controlled interfaces, alternative input methods, and adaptive technologies.</p>
-                            </div>
-                        </div>
-                        <div class="course-grid">
-                            <div class="course-card" onclick="enrollCourse('Voice Control Mastery')">
-                                <h4>Voice Control Mastery</h4>
-                                <div class="course-features">
-                                    <span class="feature">Voice Commands</span>
-                                    <span class="feature">Hands-Free</span>
-                                </div>
-                                <div class="course-info">
-                                    <span class="duration">5 weeks</span>
-                                    <span class="level">Intermediate</span>
-                                </div>
-                            </div>
-                            <div class="course-card" onclick="enrollCourse('Adaptive Technology Setup')">
-                                <h4>Adaptive Technology Setup</h4>
-                                <div class="course-features">
-                                    <span class="feature">Hardware Setup</span>
-                                    <span class="feature">Customization</span>
-                                </div>
-                                <div class="course-info">
-                                    <span class="duration">4 weeks</span>
-                                    <span class="level">Beginner</span>
-                                </div>
-                            </div>
-                            <div class="course-card" onclick="enrollCourse('Eye-Tracking Interfaces')">
-                                <h4>Eye-Tracking Interfaces</h4>
-                                <div class="course-features">
-                                    <span class="feature">Eye Control</span>
-                                    <span class="feature">Calibration</span>
-                                </div>
-                                <div class="course-info">
-                                    <span class="duration">6 weeks</span>
-                                    <span class="level">Advanced</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Learning Disability Courses -->
-                    <div class="disability-category">
-                        <div class="category-header">
-                            <div class="category-icon">📖</div>
-                            <div class="category-info">
-                                <h3>Learning Disability Courses</h3>
-                                <p>Multi-sensory learning approaches, dyslexia-friendly formats, and personalized pace.</p>
-                            </div>
-                        </div>
-                        <div class="course-grid">
-                            <div class="course-card" onclick="enrollCourse('Dyslexia-Friendly Reading')">
-                                <h4>Dyslexia-Friendly Reading</h4>
-                                <div class="course-features">
-                                    <span class="feature">Special Fonts</span>
-                                    <span class="feature">Color Coding</span>
-                                </div>
-                                <div class="course-info">
-                                    <span class="duration">10 weeks</span>
-                                    <span class="level">Beginner</span>
-                                </div>
-                            </div>
-                            <div class="course-card" onclick="enrollCourse('Multi-Sensory Learning')">
-                                <h4>Multi-Sensory Learning</h4>
-                                <div class="course-features">
-                                    <span class="feature">Touch & Sound</span>
-                                    <span class="feature">Visual Aids</span>
-                                </div>
-                                <div class="course-info">
-                                    <span class="duration">8 weeks</span>
-                                    <span class="level">Intermediate</span>
-                                </div>
-                            </div>
-                            <div class="course-card" onclick="enrollCourse('Personalized Learning Paths')">
-                                <h4>Personalized Learning Paths</h4>
-                                <div class="course-features">
-                                    <span class="feature">Adaptive Pace</span>
-                                    <span class="feature">Custom Content</span>
-                                </div>
-                                <div class="course-info">
-                                    <span class="duration">Flexible</span>
-                                    <span class="level">All Levels</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- My Courses Section -->
-            <section id="courses" class="content-section">
-                <div class="section-header">
-                    <h2>My Courses</h2>
-                    <p>Track your enrolled courses and continue your learning journey.</p>
-                </div>
-                <div class="empty-state">
-                    <div class="empty-icon">📚</div>
-                    <h3>No courses enrolled yet</h3>
-                    <p>Browse our disability-specific courses and start learning today!</p>
-                    <button class="cta-btn" onclick="showSection('browse')">Browse Courses</button>
-                </div>
-            </section>
-
-            <!-- Progress Section -->
-            <section id="progress" class="content-section">
-                <div class="section-header">
-                    <h2>Learning Progress</h2>
-                    <p>Monitor your achievements and track your learning milestones.</p>
-                </div>
-                <div class="progress-overview">
-                    <div class="progress-card">
-                        <h3>Overall Progress</h3>
-                        <div class="progress-circle">
-                            <span class="progress-percentage">0%</span>
-                        </div>
-                        <p>Complete your first course to see progress!</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Support Section -->
-            <section id="support" class="content-section">
-                <div class="section-header">
-                    <h2>Support & Accessibility</h2>
-                    <p>Get help with technical issues, accessibility needs, or course guidance.</p>
-                </div>
-                <div class="support-grid">
-                    <div class="support-card">
-                        <h3>🎧 Accessibility Support</h3>
-                        <p>Get help with screen readers, voice controls, or other assistive technologies.</p>
-                        <button class="support-btn" onclick="window.open('/#ticket', '_blank')">Get Accessibility Help</button>
-                    </div>
-                    <div class="support-card">
-                        <h3>💬 Course Support</h3>
-                        <p>Need help with course content or learning materials? Our instructors are here to help.</p>
-                        <button class="support-btn" onclick="window.open('/#contact', '_blank')">Contact Instructor</button>
-                    </div>
-                    <div class="support-card">
-                        <h3>🛠️ Technical Support</h3>
-                        <p>Having trouble with the platform? Report bugs or get technical assistance.</p>
-                        <button class="support-btn" onclick="window.open('/#ticket', '_blank')">Report Issue</button>
-                    </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </main>
-
-        <!-- Success/Error Messages -->
-        <div id="messageContainer" class="message-container"></div>
     </div>
 
-    <script src="dashboard-script.js"></script>
+    <!-- Dashboard JS -->
+    <script src="dashboard.js"></script>
+    
+    <!-- Initialize App -->
+    <script>
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load user data and determine dashboard type
+            const user = JSON.parse(localStorage.getItem('skillbridge_user') || '{}');
+            
+            if (user && user.user_type === 'teacher') {
+                // Show teacher dashboard
+                document.getElementById('dashboardPage').style.display = 'none';
+                document.getElementById('teacherDashboardPage').style.display = 'block';
+                document.getElementById('teacherDashboardPage').classList.add('active');
+                document.getElementById('teacherUserName').textContent = user.username || 'Teacher';
+            } else {
+                // Show student dashboard (default)
+                document.getElementById('userName').textContent = user.username || 'Student';
+            }
+            
+            // Set user initials in profile
+            const initials = (user.username || 'S').charAt(0).toUpperCase();
+            document.getElementById('userInitials').textContent = initials;
+            
+            // Setup mobile menu
+            const mobileToggle = document.getElementById('mobileMenuToggle');
+            const sidebar = document.getElementById('sidebar');
+            const glassOverlay = document.getElementById('glassOverlay');
+            
+            mobileToggle?.addEventListener('click', function() {
+                sidebar.classList.toggle('open');
+                glassOverlay.classList.toggle('sidebar-open');
+            });
+            
+            glassOverlay?.addEventListener('click', function() {
+                sidebar.classList.remove('open');
+                glassOverlay.classList.remove('sidebar-open');
+            });
+            
+            // Setup scroll progress
+            const mainContent = document.getElementById('mainContent');
+            const scrollProgress = document.getElementById('scrollProgress');
+            
+            mainContent?.addEventListener('scroll', function() {
+                const scrollTop = this.scrollTop;
+                const scrollHeight = this.scrollHeight - this.clientHeight;
+                const scrollPercentage = (scrollTop / scrollHeight) * 100;
+                scrollProgress.style.width = scrollPercentage + '%';
+            });
+        });
+    </script>
 </body>
 </html>
