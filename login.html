@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShaktiPath - Login & Register</title>
+    <link rel="stylesheet" href="login-styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Background Elements -->
+        <div class="bg-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <h1>ShaktiPath</h1>
+                <span class="tagline">Empowering Lives Through Education</span>
+            </div>
+            <a href="/" class="back-link">← Back to Home</a>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="form-container">
+                <!-- Login Form -->
+                <div class="form-wrapper" id="loginForm">
+                    <div class="form-header">
+                        <h2>Welcome Back</h2>
+                        <p>Sign in to continue your learning journey</p>
+                    </div>
+                    
+                    <form id="loginFormElement" class="auth-form">
+                        <div class="form-group">
+                            <label for="loginEmail">Email Address</label>
+                            <input type="email" id="loginEmail" name="email" required aria-describedby="loginEmailError">
+                            <span class="error-message" id="loginEmailError"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <div class="password-input">
+                                <input type="password" id="loginPassword" name="password" required aria-describedby="loginPasswordError">
+                                <button type="button" class="password-toggle" onclick="togglePassword('loginPassword')" aria-label="Toggle password visibility">
+                                    <span class="toggle-icon">👁️</span>
+                                </button>
+                            </div>
+                            <span class="error-message" id="loginPasswordError"></span>
+                        </div>
+
+                        <button type="submit" class="submit-btn">
+                            <span class="btn-text">Sign In</span>
+                            <span class="btn-loading">Signing In...</span>
+                        </button>
+
+                        <div class="form-links">
+                            <a href="#" class="forgot-link">Forgot Password?</a>
+                        </div>
+                    </form>
+
+                    <div class="form-switch">
+                        <p>Don't have an account? <button type="button" onclick="switchToRegister()" class="switch-btn">Sign Up</button></p>
+                    </div>
+                </div>
+
+                <!-- Register Form -->
+                <div class="form-wrapper hidden" id="registerForm">
+                    <div class="form-header">
+                        <h2>Join ShaktiPath</h2>
+                        <p>Create your account to access specialized courses</p>
+                    </div>
+                    
+                    <form id="registerFormElement" class="auth-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" id="firstName" name="firstName" required aria-describedby="firstNameError">
+                                <span class="error-message" id="firstNameError"></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" id="lastName" name="lastName" required aria-describedby="lastNameError">
+                                <span class="error-message" id="lastNameError"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="registerEmail">Email Address</label>
+                            <input type="email" id="registerEmail" name="email" required aria-describedby="registerEmailError">
+                            <span class="error-message" id="registerEmailError"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="registerPassword">Password</label>
+                            <div class="password-input">
+                                <input type="password" id="registerPassword" name="password" required minlength="6" aria-describedby="registerPasswordError">
+                                <button type="button" class="password-toggle" onclick="togglePassword('registerPassword')" aria-label="Toggle password visibility">
+                                    <span class="toggle-icon">👁️</span>
+                                </button>
+                            </div>
+                            <span class="error-message" id="registerPasswordError"></span>
+                            <small class="help-text">Password must be at least 6 characters long</small>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Phone Number (Optional)</label>
+                                <input type="tel" id="phone" name="phone" aria-describedby="phoneError">
+                                <span class="error-message" id="phoneError"></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="dateOfBirth">Date of Birth (Optional)</label>
+                                <input type="date" id="dateOfBirth" name="dateOfBirth" aria-describedby="dateOfBirthError">
+                                <span class="error-message" id="dateOfBirthError"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="disabilityType">Disability Type (Optional)</label>
+                            <select id="disabilityType" name="disabilityType" aria-describedby="disabilityTypeError">
+                                <option value="">Please select (Optional)</option>
+                                <option value="visual">Visual Impairment</option>
+                                <option value="hearing">Hearing Impairment</option>
+                                <option value="mobility">Mobility Impairment</option>
+                                <option value="cognitive">Cognitive Impairment</option>
+                                <option value="learning">Learning Disability</option>
+                                <option value="neurological">Neurological Condition</option>
+                                <option value="multiple">Multiple Disabilities</option>
+                                <option value="other">Other</option>
+                                <option value="prefer-not-to-say">Prefer not to say</option>
+                            </select>
+                            <span class="error-message" id="disabilityTypeError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="accessibilityNeeds">Accessibility Needs (Optional)</label>
+                            <textarea id="accessibilityNeeds" name="accessibilityNeeds" rows="3" placeholder="Please describe any specific accessibility accommodations you may need for your courses..." aria-describedby="accessibilityNeedsError"></textarea>
+                            <span class="error-message" id="accessibilityNeedsError"></span>
+                        </div>
+
+                        <!-- Emergency Contact Section -->
+                        <fieldset class="emergency-contact">
+                            <legend>Emergency Contact (Optional)</legend>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="emergencyContactName">Contact Name</label>
+                                    <input type="text" id="emergencyContactName" name="emergencyContactName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="emergencyContactPhone">Contact Phone</label>
+                                    <input type="tel" id="emergencyContactPhone" name="emergencyContactPhone">
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                                <span class="checkmark"></span>
+                                I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="submit-btn">
+                            <span class="btn-text">Create Account</span>
+                            <span class="btn-loading">Creating Account...</span>
+                        </button>
+                    </form>
+
+                    <div class="form-switch">
+                        <p>Already have an account? <button type="button" onclick="switchToLogin()" class="switch-btn">Sign In</button></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success/Error Messages -->
+            <div id="messageContainer" class="message-container"></div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 ShaktiPath. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Help</a>
+                <a href="#">Accessibility</a>
+                <a href="#">Privacy</a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="login-script.js"></script>
+</body>
+</html>

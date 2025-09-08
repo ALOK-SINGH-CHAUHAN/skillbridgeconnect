@@ -1,8 +1,8 @@
-# SkillBridge Connect
+# ShaktiPath - Empowering Lives Through Education
 
 ## Overview
 
-SkillBridge Connect is a web-based platform designed to connect individuals seeking guidance with those who can provide mentorship and knowledge sharing. The project aims to bridge the gap between curiosity and expertise, creating a community where learning and teaching intersect. Currently implemented as a frontend-focused landing page with modern web technologies, the platform is positioned for future expansion into a full-featured mentorship and skill-sharing application.
+ShaktiPath is a web-based educational platform designed to empower disabled individuals through quality education. The project is a static website that showcases specialized courses and provides a user-friendly interface for students to explore educational opportunities. The platform emphasizes accessibility and inclusivity, featuring smooth navigation, contact forms, and ticket support systems to ensure all users can effectively engage with the services.
 
 ## User Preferences
 
@@ -10,67 +10,49 @@ Preferred communication style: Simple, everyday language.
 
 ## System Architecture
 
-### Full-Stack Architecture
-The application is a full-stack web platform built with modern technologies:
+### Frontend Architecture
+The application follows a traditional static website architecture with vanilla HTML, CSS, and JavaScript:
 
-**Backend:**
-- **Express.js Server**: RESTful API with user authentication endpoints
-- **PostgreSQL Database**: Production database with fallback demo mode for development
-- **Security Features**: Bcrypt password hashing, CORS protection, input validation
-- **API Endpoints**: User registration, login, health checks, and user management
+- **HTML Structure**: Semantic HTML5 layout with proper accessibility considerations for disabled users
+- **CSS Framework**: Custom CSS with responsive design patterns using Flexbox and modern CSS features
+- **JavaScript**: Vanilla JavaScript for interactive functionality including smooth scrolling, form handling, and dynamic content display
+- **Navigation**: Fixed navigation bar with smooth scrolling between sections
+- **Responsive Design**: Mobile-first approach ensuring accessibility across all device types
 
-**Frontend:**
-- **Static HTML Structure**: Clean semantic markup with a focus on accessibility and SEO
-- **CSS-based Styling**: Modern CSS with gradient backgrounds, flexbox layouts, and responsive design principles
-- **Vanilla JavaScript**: Event-driven interactions with DOM manipulation for enhanced user experience
+### Component Structure
+- **Navigation Component**: Fixed header with brand identity and smooth scrolling navigation
+- **Hero Section**: Statistics showcase with call-to-action elements
+- **Contact System**: Form-based contact mechanism with client-side validation
+- **Ticket System**: Support ticket functionality for user assistance
+- **Course Display**: Modal-based course information system with category filtering
 
 ### Design Patterns
-- **Component-based CSS**: Modular CSS classes following BEM-like naming conventions
-- **Progressive Enhancement**: Core functionality works without JavaScript, with JS adding enhanced interactions
-- **Mobile-first Responsive Design**: Flexible layouts that adapt to different screen sizes
+- **Progressive Enhancement**: Base functionality works without JavaScript, enhanced with interactive features
+- **Modular CSS**: Component-based styling with reusable classes and consistent color scheme
+- **Event-Driven JavaScript**: DOM event listeners for form submissions and navigation interactions
+- **Accessibility-First**: Design considerations for disabled users including semantic HTML and proper contrast ratios
 
-### User Interface Design
-The interface employs a dark theme aesthetic with:
-- Dark background (#1a1a1a) for reduced eye strain
-- Gradient accents for visual appeal
-- Fixed navigation bar with smooth transitions
-- Hero section with clear call-to-action
-
-### Performance Considerations
-- Minimal external dependencies
-- CSS-only animations where possible
-- Efficient DOM manipulation with event delegation
-- Optimized asset loading
+### Color Scheme and Branding
+- Primary brand colors: Dark blue (#2c3e50) and red (#e74c3c)
+- Emphasis on high contrast and readability for accessibility compliance
 
 ## External Dependencies
 
-### Backend Dependencies
-- **express**: Web application framework for Node.js
-- **cors**: Cross-Origin Resource Sharing middleware
-- **bcrypt**: Password hashing library for security
-- **pg**: PostgreSQL client for database operations
-- **dotenv**: Environment variable management
+### Core Technologies
+- **HTML5**: Semantic markup for accessibility
+- **CSS3**: Modern styling with Flexbox and responsive design features
+- **Vanilla JavaScript**: No external JavaScript frameworks or libraries
 
-### Frontend Dependencies
-- **Fonts**: Arial fallback font family (system fonts)
-- **No External Libraries**: Pure vanilla JavaScript implementation
-- **No CSS Frameworks**: Custom CSS implementation
+### Potential Future Integrations
+The current architecture is designed to easily accommodate:
+- **Backend API**: RESTful API integration for form submissions and course data
+- **Database**: Course catalog and user management systems
+- **Authentication**: User registration and login systems
+- **Analytics**: User behavior tracking and course completion metrics
+- **Payment Processing**: Course enrollment and payment handling
+- **Accessibility Tools**: Screen reader compatibility and additional accessibility features
 
-## Current Setup Status
-- ✅ **Server Running**: Express.js server successfully running on port 5000
-- ✅ **Dependencies Installed**: All Node.js packages installed via npm
-- ✅ **Database Ready**: PostgreSQL support configured with demo mode fallback
-- ✅ **Frontend Accessible**: Static files served and website fully functional
-- ✅ **Deployment Configured**: Autoscale deployment setup for production
-- ✅ **Host Configuration**: Server properly configured for Replit environment (0.0.0.0:5000)
-
-### Future Integration Points
-The current architecture is designed to accommodate future integrations:
-- Database integration for user management and mentorship connections
-- Authentication systems for user registration and login
-- Real-time communication features for mentor-mentee interactions
-- Payment processing for premium mentorship services
-- File upload and sharing capabilities
-- Email notification systems
-
-The simple foundation allows for easy integration of backend services, databases, and additional frontend frameworks as the platform scales.
+### Browser Compatibility
+- Modern browsers with ES6+ JavaScript support
+- Progressive enhancement ensures basic functionality across older browsers
+- CSS Grid and Flexbox for layout compatibility
