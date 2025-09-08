@@ -9,8 +9,8 @@ Preferred communication style: Simple, everyday language.
 # System Architecture
 
 ## Backend Architecture
-- **Framework**: Express.js web framework with Mongoose ODM for database operations
-- **Database**: MongoDB with local instance for development
+- **Framework**: Express.js web framework with Sequelize ORM for database operations
+- **Database**: PostgreSQL with environment-based configuration for development
 - **Authentication**: Username/email-based login with bcryptjs password hashing
 - **Validation**: Express-validator for input validation and sanitization
 - **API Design**: RESTful JSON endpoints for frontend-backend communication
@@ -24,11 +24,11 @@ Preferred communication style: Simple, everyday language.
 - **Icons**: Font Awesome integration for visual elements
 
 ## Database Schema
-- **User Model**: MongoDB document storing user credentials, profile information, and role assignment
-- **Role System**: Simple string-based roles ('student' or 'teacher') for access control
+- **User Model**: PostgreSQL table storing user credentials, profile information, and role assignment
+- **Role System**: Simple ENUM-based roles ('student' or 'teacher') for access control
 - **Security**: Password hashing with bcryptjs secure methods
 - **Timestamps**: Created_at tracking for user registration
-- **Indexes**: Unique indexes on username and email fields for performance and data integrity
+- **Constraints**: Unique constraints on username and email fields for performance and data integrity
 
 ## Security Features
 - **Password Hashing**: bcryptjs with salt rounds for secure password storage
@@ -38,21 +38,22 @@ Preferred communication style: Simple, everyday language.
 
 # Recent Changes
 
-## September 08, 2025 - Backend Migration to Express.js & MongoDB
+## September 08, 2025 - Backend Migration to Express.js & PostgreSQL
 - Successfully converted backend from Flask (Python) to Express.js (Node.js)
-- Migrated database from PostgreSQL to MongoDB with local instance
-- Created MongoDB User schema with Mongoose ODM
-- Converted all Flask API routes to Express.js routes
+- Migrated database from MongoDB to PostgreSQL with environment-based configuration
+- Created PostgreSQL User model with Sequelize ORM
+- Converted all MongoDB/Mongoose queries to PostgreSQL/Sequelize
 - Implemented bcryptjs for password hashing (replacing Werkzeug)
 - Added express-validator for comprehensive input validation
-- Updated workflows for MongoDB and Express server
+- Updated workflows for PostgreSQL and Express server
 - Configured autoscale deployment for Node.js application
 
 # External Dependencies
 
 ## Core Dependencies
 - **Express.js**: Web framework and application server
-- **Mongoose**: MongoDB ODM for database operations
+- **Sequelize**: PostgreSQL ORM for database operations
+- **pg**: PostgreSQL client for Node.js
 - **bcryptjs**: Password hashing and security
 - **express-validator**: Input validation and sanitization
 - **cors**: Cross-origin resource sharing middleware
@@ -69,7 +70,7 @@ Preferred communication style: Simple, everyday language.
 - **Environment Variables**: Configuration management for database URLs and settings
 
 ## Database Support
-- **MongoDB**: Document database with local instance for development
-- **Mongoose ODM**: Object Document Mapping for MongoDB operations
-- **Auto-indexing**: Unique indexes created automatically for username and email
-- **Connection Management**: Automatic connection handling with retry logic
+- **PostgreSQL**: Relational database with environment-based configuration
+- **Sequelize ORM**: Object Relational Mapping for PostgreSQL operations
+- **Auto-constraints**: Unique constraints and validations managed by Sequelize
+- **Connection Management**: Automatic connection pooling and error handling

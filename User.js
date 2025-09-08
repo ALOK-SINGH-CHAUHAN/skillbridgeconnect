@@ -1,61 +1,99 @@
-const mongoose = require('mongoose');
+const { DataTypes } = require('sequelize');
 const bcrypt = require('bcryptjs');
 
-const userSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true,
-        lowercase: true
-    },
-    password_hash: {
-        type: String,
-        required: true
-    },
-    role: {
-        type: String,
-        required: true,
-        enum: ['student', 'teacher']
-    },
-    full_name: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    created_at: {
-        type: Date,
-        default: Date.now
-    }
-});
+// This will be initialized in server.js with sequelize instance
+let sequelize;
 
-// Method to set password
-userSchema.methods.setPassword = function(password) {
-    this.password_hash = bcrypt.hashSync(password, 10);
-};
+const User = (sequelizeInstance) => {
+    sequelize = sequelizeInstance;
+    
+    const UserModel = sequelize.define('User', {
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        username: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true,
+            validate: {
+                notEmpty: true
+            },
+            set(value) {
+                this.setDataValue('username', value ? value.trim() : value);
+            }
+        },
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true,
+            validate: {
+                isEmail: true,
+                notEmpty: true
+            },
+            set(value) {
+                this.setDataValue('email', value ? value.trim().toLowerCase() : value);
+            }
+        },
+        password_hash: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        role: {
+            type: DataTypes.ENUM('student', 'teacher'),
+            allowNull: false
+        },
+        full_name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            },
+            set(value) {
+                this.setDataValue('full_name', value ? value.trim() : value);
+            }
+        },
+        created_at: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW
+        }
+    }, {
+        tableName: 'users',
+        timestamps: false,
+        hooks: {
+            beforeValidate: (user) => {
+                if (user.username) user.username = user.username.trim();
+                if (user.email) user.email = user.email.trim().toLowerCase();
+                if (user.full_name) user.full_name = user.full_name.trim();
+            }
+        }
+    });
 
-// Method to check password
-userSchema.methods.checkPassword = function(password) {
-    return bcrypt.compareSync(password, this.password_hash);
-};
-
-// Transform output to match frontend expectations
-userSchema.methods.toJSON = function() {
-    const userObject = this.toObject();
-    return {
-        id: userObject._id,
-        username: userObject.username,
-        email: userObject.email,
-        role: userObject.role,
-        full_name: userObject.full_name,
-        created_at: userObject.created_at
+    // Instance method to set password
+    UserModel.prototype.setPassword = function(password) {
+        this.password_hash = bcrypt.hashSync(password, 10);
     };
+
+    // Instance method to check password
+    UserModel.prototype.checkPassword = function(password) {
+        return bcrypt.compareSync(password, this.password_hash);
+    };
+
+    // Transform output to match frontend expectations
+    UserModel.prototype.toJSON = function() {
+        const values = Object.assign({}, this.get());
+        return {
+            id: values.id,
+            username: values.username,
+            email: values.email,
+            role: values.role,
+            full_name: values.full_name,
+            created_at: values.created_at
+        };
+    };
+
+    return UserModel;
 };
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = User;

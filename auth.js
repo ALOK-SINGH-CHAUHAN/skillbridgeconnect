@@ -1,6 +1,6 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
-const User = require('./User');
+const { Op } = require('sequelize');
 
 const router = express.Router();
 
@@ -22,13 +22,16 @@ router.post('/login', [
         const { identifier, password } = req.body;
 
         // Find user by email or username
+        const User = req.app.locals.User;
         let user;
         try {
             user = await User.findOne({
-                $or: [
-                    { email: identifier },
-                    { username: identifier }
-                ]
+                where: {
+                    [Op.or]: [
+                        { email: identifier },
+                        { username: identifier }
+                    ]
+                }
             });
         } catch (dbError) {
             console.error('Database query error during login:', dbError);
@@ -78,15 +81,18 @@ router.post('/register', [
         }
 
         const { username, email, password, fullName, role } = req.body;
+        const User = req.app.locals.User;
 
         // Check if user already exists
         let existingUser;
         try {
             existingUser = await User.findOne({
-                $or: [
-                    { email: email },
-                    { username: username }
-                ]
+                where: {
+                    [Op.or]: [
+                        { email: email },
+                        { username: username }
+                    ]
+                }
             });
         } catch (dbError) {
             console.error('Database query error:', dbError);
@@ -111,7 +117,7 @@ router.post('/register', [
         }
 
         // Create new user
-        const newUser = new User({
+        const newUser = User.build({
             username: username,
             email: email,
             full_name: fullName,
@@ -124,9 +130,9 @@ router.post('/register', [
             await newUser.save();
         } catch (saveError) {
             console.error('User save error:', saveError);
-            if (saveError.code === 11000) {
+            if (saveError.name === 'SequelizeUniqueConstraintError') {
                 // Duplicate key error
-                const field = Object.keys(saveError.keyPattern)[0];
+                const field = saveError.errors[0].path;
                 const message = field === 'email' ? 'Email already registered' : 'Username already taken';
                 return res.status(409).json({
                     success: false,
@@ -158,6 +164,7 @@ router.post('/register', [
 router.post('/check-availability', async (req, res) => {
     try {
         const { field, value } = req.body;
+        const User = req.app.locals.User;
 
         if (!field || !value) {
             return res.json({ available: false });
@@ -174,7 +181,7 @@ router.post('/check-availability', async (req, res) => {
 
         let exists;
         try {
-            exists = await User.findOne(query);
+            exists = await User.findOne({ where: query });
         } catch (dbError) {
             console.error('Database query error during availability check:', dbError);
             return res.json({ available: false });

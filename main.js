@@ -298,11 +298,15 @@ async function handleLogin(event) {
             showAlert(`Welcome back, ${result.user.full_name}!`, 'success');
             
             // Store user data in localStorage
-            localStorage.setItem('user', JSON.stringify(result.user));
+            localStorage.setItem('userData', JSON.stringify(result.user));
             
-            // Redirect to dashboard
+            // Redirect to appropriate dashboard based on user role
             setTimeout(() => {
-                window.location.href = 'dashboard.html';
+                if (result.user.role === 'teacher') {
+                    window.location.href = '/teacher-dashboard';
+                } else {
+                    window.location.href = '/student-dashboard';
+                }
             }, 1500);
         } else {
             showAlert(result.message, 'danger');
@@ -357,12 +361,15 @@ async function handleRegister(event) {
             showAlert(`Account created successfully! Welcome, ${result.user.full_name}!`, 'success');
             
             // Store user data in localStorage
-            localStorage.setItem('user', JSON.stringify(result.user));
+            localStorage.setItem('userData', JSON.stringify(result.user));
             
-            // Switch to login tab after successful registration
+            // Redirect to appropriate dashboard based on user role
             setTimeout(() => {
-                switchTab('login');
-                showAlert('Registration successful! You can now log in.', 'info');
+                if (result.user.role === 'teacher') {
+                    window.location.href = '/teacher-dashboard';
+                } else {
+                    window.location.href = '/student-dashboard';
+                }
             }, 2000);
         } else {
             showAlert(result.message, 'danger');
@@ -546,9 +553,18 @@ function clearAlerts() {
 
 // Check for existing user session on page load
 document.addEventListener('DOMContentLoaded', function() {
-    const user = localStorage.getItem('user');
+    const user = localStorage.getItem('userData');
     if (user) {
         const userData = JSON.parse(user);
         showAlert(`Welcome back, ${userData.full_name}! You are logged in as a ${userData.role}.`, 'info');
+        
+        // Auto-redirect if user is already logged in
+        setTimeout(() => {
+            if (userData.role === 'teacher') {
+                window.location.href = '/teacher-dashboard';
+            } else {
+                window.location.href = '/student-dashboard';
+            }
+        }, 2000);
     }
 });

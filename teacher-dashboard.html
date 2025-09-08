@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard | SkillBridgeConnect</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Dashboard CSS -->
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+            </div>
+            
+            <ul class="sidebar-nav">
+                <li class="nav-item active" data-tooltip="Dashboard">
+                    <a href="#" class="nav-link" data-page="dashboard">
+                        <i class="fas fa-home"></i>
+                    </a>
+                </li>
+                <li class="nav-item" data-tooltip="My Students">
+                    <a href="#" class="nav-link" data-page="students">
+                        <i class="fas fa-users"></i>
+                    </a>
+                </li>
+                <li class="nav-item" data-tooltip="Courses">
+                    <a href="#" class="nav-link" data-page="courses">
+                        <i class="fas fa-book-open"></i>
+                    </a>
+                </li>
+                <li class="nav-item" data-tooltip="Analytics">
+                    <a href="#" class="nav-link" data-page="analytics">
+                        <i class="fas fa-chart-line"></i>
+                    </a>
+                </li>
+                <li class="nav-item" data-tooltip="Messages">
+                    <a href="#" class="nav-link" data-page="messages">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <div class="nav-item" data-tooltip="Logout">
+                    <a href="#" class="nav-link" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Page -->
+            <div class="page-content active" id="dashboardPage">
+                <div class="page-header">
+                    <div class="welcome-section">
+                        <div class="greeting-card">
+                            <h2 class="greeting">Welcome back, <span id="teacherName">Teacher</span></h2>
+                            <p class="greeting-subtitle">Ready to inspire and guide your students today?</p>
+                        </div>
+                        
+                        <div class="progress-overview">
+                            <div class="stats-grid teacher-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number" id="totalStudents">24</div>
+                                    <div class="stat-label">Total Students</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number" id="activeCourses">5</div>
+                                    <div class="stat-label">Active Courses</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number" id="avgProgress">78%</div>
+                                    <div class="stat-label">Avg. Progress</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-content">
+                    <section class="recent-activity">
+                        <h3 class="section-title">
+                            <i class="fas fa-chart-line me-2"></i>Recent Student Activity
+                        </h3>
+                        <div class="activity-grid">
+                            <div class="activity-card">
+                                <div class="activity-icon">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4 class="activity-title">Sarah completed Web Development</h4>
+                                    <p class="activity-description">Finished all modules with 95% score</p>
+                                    <span class="activity-time">2 hours ago</span>
+                                </div>
+                            </div>
+                            
+                            <div class="activity-card">
+                                <div class="activity-icon">
+                                    <i class="fas fa-question-circle"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4 class="activity-title">Mike asked a question</h4>
+                                    <p class="activity-description">About React hooks in JavaScript course</p>
+                                    <span class="activity-time">4 hours ago</span>
+                                </div>
+                            </div>
+                            
+                            <div class="activity-card">
+                                <div class="activity-icon">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4 class="activity-title">Emma left a 5-star review</h4>
+                                    <p class="activity-description">For Database Design course</p>
+                                    <span class="activity-time">1 day ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="my-courses">
+                        <h3 class="section-title">
+                            <i class="fas fa-book-open me-2"></i>My Courses
+                        </h3>
+                        <div class="courses-grid">
+                            <div class="course-card teacher-course">
+                                <div class="course-image">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <div class="course-info">
+                                    <h4 class="course-title">Web Development Fundamentals</h4>
+                                    <p class="course-description">HTML, CSS, and JavaScript basics</p>
+                                    <div class="course-stats">
+                                        <span class="students-enrolled">
+                                            <i class="fas fa-users"></i> 12 students
+                                        </span>
+                                        <span class="course-rating">
+                                            <i class="fas fa-star"></i> 4.8
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="course-card teacher-course">
+                                <div class="course-image">
+                                    <i class="fas fa-database"></i>
+                                </div>
+                                <div class="course-info">
+                                    <h4 class="course-title">Database Design</h4>
+                                    <p class="course-description">SQL and database concepts</p>
+                                    <div class="course-stats">
+                                        <span class="students-enrolled">
+                                            <i class="fas fa-users"></i> 8 students
+                                        </span>
+                                        <span class="course-rating">
+                                            <i class="fas fa-star"></i> 4.9
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="course-card teacher-course">
+                                <div class="course-image">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <div class="course-info">
+                                    <h4 class="course-title">Mobile App Development</h4>
+                                    <p class="course-description">React Native and Flutter</p>
+                                    <div class="course-stats">
+                                        <span class="students-enrolled">
+                                            <i class="fas fa-users"></i> 6 students
+                                        </span>
+                                        <span class="course-rating">
+                                            <i class="fas fa-star"></i> 4.7
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Students Page -->
+            <div class="page-content" id="studentsPage">
+                <div class="page-header">
+                    <h2 class="page-title">My Students</h2>
+                    <p class="page-subtitle">Manage and track your students' progress</p>
+                </div>
+                
+                <div class="students-grid">
+                    <div class="student-card">
+                        <div class="student-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="student-info">
+                            <h4 class="student-name">Sarah Johnson</h4>
+                            <p class="student-email">sarah@example.com</p>
+                            <div class="student-progress">
+                                <span class="progress-label">Overall Progress</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 95%"></div>
+                                </div>
+                                <span class="progress-text">95%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="student-card">
+                        <div class="student-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="student-info">
+                            <h4 class="student-name">Mike Chen</h4>
+                            <p class="student-email">mike@example.com</p>
+                            <div class="student-progress">
+                                <span class="progress-label">Overall Progress</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 72%"></div>
+                                </div>
+                                <span class="progress-text">72%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="student-card">
+                        <div class="student-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="student-info">
+                            <h4 class="student-name">Emma Davis</h4>
+                            <p class="student-email">emma@example.com</p>
+                            <div class="student-progress">
+                                <span class="progress-label">Overall Progress</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 88%"></div>
+                                </div>
+                                <span class="progress-text">88%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other pages would go here -->
+            <div class="page-content" id="coursesPage">
+                <div class="page-header">
+                    <h2 class="page-title">Course Management</h2>
+                    <p class="page-subtitle">Create and manage your courses</p>
+                </div>
+                <div class="coming-soon">
+                    <i class="fas fa-cog fa-spin"></i>
+                    <h3>Coming Soon</h3>
+                    <p>Course management features are being developed</p>
+                </div>
+            </div>
+
+            <div class="page-content" id="analyticsPage">
+                <div class="page-header">
+                    <h2 class="page-title">Analytics</h2>
+                    <p class="page-subtitle">Track student performance and engagement</p>
+                </div>
+                <div class="coming-soon">
+                    <i class="fas fa-chart-bar"></i>
+                    <h3>Coming Soon</h3>
+                    <p>Analytics dashboard is being developed</p>
+                </div>
+            </div>
+
+            <div class="page-content" id="messagesPage">
+                <div class="page-header">
+                    <h2 class="page-title">Messages</h2>
+                    <p class="page-subtitle">Communicate with your students</p>
+                </div>
+                <div class="coming-soon">
+                    <i class="fas fa-comments"></i>
+                    <h3>Coming Soon</h3>
+                    <p>Messaging system is being developed</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Dashboard JS -->
+    <script src="dashboard.js"></script>
+    
+    <script>
+        // Set teacher-specific data
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get user data from localStorage or URL params
+            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+            if (userData.full_name) {
+                document.getElementById('teacherName').textContent = userData.full_name;
+            }
+            
+            // Logout functionality
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('userData');
+                window.location.href = '/';
+            });
+        });
+    </script>
+</body>
+</html>

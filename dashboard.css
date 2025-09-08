@@ -618,3 +618,196 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+/* Teacher-specific styles */
+.teacher-stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.teacher-course .course-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.students-enrolled,
+.course-rating {
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.course-rating {
+    color: var(--accent-warning);
+}
+
+/* Activity Grid for Teachers */
+.activity-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.activity-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    transition: var(--transition-normal);
+}
+
+.activity-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-secondary);
+    box-shadow: 0 4px 20px var(--shadow-primary);
+}
+
+.activity-icon {
+    width: 50px;
+    height: 50px;
+    background: var(--gradient-primary);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+.activity-info {
+    flex: 1;
+}
+
+.activity-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.activity-description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.activity-time {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+/* Students Grid for Teachers */
+.students-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.student-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    transition: var(--transition-normal);
+}
+
+.student-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-secondary);
+    box-shadow: 0 4px 20px var(--shadow-primary);
+}
+
+.student-avatar {
+    width: 60px;
+    height: 60px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.student-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.student-email {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.student-progress .progress-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.student-progress .progress-bar {
+    margin-bottom: 0.5rem;
+}
+
+.student-progress .progress-text {
+    font-size: 0.9rem;
+    color: var(--accent-secondary);
+    font-weight: 600;
+}
+
+/* Coming Soon Placeholder */
+.coming-soon {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--text-secondary);
+}
+
+.coming-soon i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.coming-soon h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.coming-soon p {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+/* Mobile responsiveness for teacher elements */
+@media (max-width: 768px) {
+    .teacher-stats {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .activity-grid,
+    .students-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .activity-card {
+        padding: 1rem;
+    }
+    
+    .student-card {
+        padding: 1rem;
+    }
+}
