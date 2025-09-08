@@ -84,8 +84,22 @@ app.get('/about-us', (req, res) => {
     res.sendFile(path.join(__dirname, 'about-us.html'));
 });
 
+// Serve static files only for valid file extensions
 app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, req.path));
+    const filePath = path.join(__dirname, req.path);
+    const extname = path.extname(req.path);
+    
+    // Only serve files with extensions (like .css, .js, .png, etc.)
+    if (extname) {
+        res.sendFile(filePath, (err) => {
+            if (err) {
+                res.status(404).send('File not found');
+            }
+        });
+    } else {
+        // For routes without extensions, redirect to homepage
+        res.redirect('/');
+    }
 });
 
 app.listen(PORT, '0.0.0.0', () => {
