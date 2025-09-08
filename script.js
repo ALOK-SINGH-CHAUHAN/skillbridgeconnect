@@ -145,13 +145,20 @@ function initAuthPage() {
                 submitButton.disabled = true;
                 
                 try {
-                    const response = await fetch('/api/login', {
+                    // Get the current domain and port
+                    const baseUrl = `${window.location.protocol}//${window.location.host}`;
+                    
+                    const response = await fetch(`${baseUrl}/api/login`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({ usernameEmail, password })
                     });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
                     
                     const data = await response.json();
                     
@@ -163,16 +170,26 @@ function initAuthPage() {
                         localStorage.setItem('skillbridge_user', JSON.stringify(data.user));
                         
                         setTimeout(() => {
-                            // Redirect to home page
-                            window.location.href = 'index.html';
+                            // Redirect to dashboard page
+                            window.location.href = 'dashboard.html';
                         }, 1500);
                     } else {
                         throw new Error(data.message || 'Login failed');
                     }
                 } catch (error) {
+                    console.error('Login error:', error);
                     submitButton.textContent = 'Login Failed';
                     submitButton.style.background = 'linear-gradient(135deg, #dc3545 0%, #c82333 100%)';
-                    alert(error.message || 'Login failed. Please try again.');
+                    
+                    // More detailed error message
+                    let errorMessage = 'Login failed. Please try again.';
+                    if (error.message.includes('HTTP error')) {
+                        errorMessage = 'Server connection failed. Please check your internet connection and try again.';
+                    } else if (error.message) {
+                        errorMessage = error.message;
+                    }
+                    
+                    alert(`Error: ${errorMessage}`);
                     
                     setTimeout(() => {
                         submitButton.textContent = originalText;
@@ -221,13 +238,20 @@ function initAuthPage() {
                 submitButton.disabled = true;
                 
                 try {
-                    const response = await fetch('/api/register', {
+                    // Get the current domain and port
+                    const baseUrl = `${window.location.protocol}//${window.location.host}`;
+                    
+                    const response = await fetch(`${baseUrl}/api/register`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({ username, email, password, userType })
                     });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
                     
                     const data = await response.json();
                     
@@ -259,9 +283,19 @@ function initAuthPage() {
                         throw new Error(data.message || 'Registration failed');
                     }
                 } catch (error) {
+                    console.error('Registration error:', error);
                     submitButton.textContent = 'Registration Failed';
                     submitButton.style.background = 'linear-gradient(135deg, #dc3545 0%, #c82333 100%)';
-                    alert(error.message || 'Registration failed. Please try again.');
+                    
+                    // More detailed error message
+                    let errorMessage = 'Registration failed. Please try again.';
+                    if (error.message.includes('HTTP error')) {
+                        errorMessage = 'Server connection failed. Please check your internet connection and try again.';
+                    } else if (error.message) {
+                        errorMessage = error.message;
+                    }
+                    
+                    alert(`Error: ${errorMessage}`);
                     
                     setTimeout(() => {
                         submitButton.textContent = originalText;
