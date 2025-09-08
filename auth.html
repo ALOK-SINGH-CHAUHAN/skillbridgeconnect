@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Register - SkillBridge Connect</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <div class="connection-nodes">
+                            <div class="node"></div>
+                            <div class="node"></div>
+                            <div class="node"></div>
+                            <div class="node center-node"></div>
+                        </div>
+                        <div class="bridge-arc"></div>
+                    </div>
+                </div>
+                <div class="brand-name">
+                    <span class="brand-skill">SKILL</span><span class="brand-bridge">BRIDGE</span><br>
+                    <span class="brand-connect">CONNECT</span>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="contact.html" class="nav-link">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="auth-main">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h1 class="auth-title">Welcome to SkillBridge Connect</h1>
+                <p class="auth-subtitle">Join our community of learners, mentors, and sponsors</p>
+            </div>
+
+            <div class="auth-toggle">
+                <button class="toggle-btn active" id="loginToggle">Login</button>
+                <button class="toggle-btn" id="registerToggle">Register</button>
+            </div>
+
+            <!-- Login Form -->
+            <div class="auth-form-container" id="loginForm">
+                <div class="auth-card">
+                    <h2 class="form-title">Login to Your Account</h2>
+                    <form class="auth-form" id="loginFormElement">
+                        <div class="form-group">
+                            <label for="loginUsernameEmail">Username or Email</label>
+                            <input type="text" id="loginUsernameEmail" name="usernameEmail" required placeholder="Enter your username or email">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" name="password" required placeholder="Enter your password">
+                        </div>
+                        <button type="submit" class="auth-submit-button">Login</button>
+                    </form>
+                    <div class="auth-switch">
+                        <p>Don't have an account? <button class="switch-link" id="switchToRegister">Create one here</button></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Register Form -->
+            <div class="auth-form-container hidden" id="registerForm">
+                <div class="auth-card">
+                    <h2 class="form-title">Create Your Account</h2>
+                    
+                    <!-- User Type Selection -->
+                    <div class="user-type-selection">
+                        <h3 class="user-type-title">I am registering as a:</h3>
+                        <div class="user-type-options">
+                            <label class="user-type-option">
+                                <input type="radio" name="userType" value="student" required>
+                                <div class="option-card">
+                                    <div class="option-icon">🎓</div>
+                                    <div class="option-content">
+                                        <h4>Student</h4>
+                                        <p>Looking to learn new skills</p>
+                                    </div>
+                                </div>
+                            </label>
+                            <label class="user-type-option">
+                                <input type="radio" name="userType" value="teacher" required>
+                                <div class="option-card">
+                                    <div class="option-icon">👨‍🏫</div>
+                                    <div class="option-content">
+                                        <h4>Teacher/Mentor</h4>
+                                        <p>Ready to share knowledge</p>
+                                    </div>
+                                </div>
+                            </label>
+                            <label class="user-type-option">
+                                <input type="radio" name="userType" value="sponsor" required>
+                                <div class="option-card">
+                                    <div class="option-icon">💝</div>
+                                    <div class="option-content">
+                                        <h4>Sponsor</h4>
+                                        <p>Want to support education</p>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <form class="auth-form" id="registerFormElement">
+                        <div class="form-group">
+                            <label for="registerUsername">Username</label>
+                            <input type="text" id="registerUsername" name="username" required placeholder="Choose a unique username">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerEmail">Email Address</label>
+                            <input type="email" id="registerEmail" name="email" required placeholder="Enter your email address">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">Password</label>
+                            <input type="password" id="registerPassword" name="password" required placeholder="Create a strong password">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirm your password">
+                        </div>
+                        <button type="submit" class="auth-submit-button">Create Account</button>
+                    </form>
+                    <div class="auth-switch">
+                        <p>Already have an account? <button class="switch-link" id="switchToLogin">Login here</button></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

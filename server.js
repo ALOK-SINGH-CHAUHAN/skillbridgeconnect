@@ -1,107 +1,180 @@
 const express = require('express');
-const { Sequelize } = require('sequelize');
 const cors = require('cors');
-const path = require('path');
+const bcrypt = require('bcrypt');
+const { Pool } = require('pg');
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Database connection
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+});
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.static('.'));
 
-// PostgreSQL connection - supports both local and cloud databases
-let DATABASE_URL = process.env.DATABASE_URL;
-
-// If no environment variable is set, use default PostgreSQL URL
-if (!DATABASE_URL) {
-    DATABASE_URL = 'postgresql://localhost:5432/student_teacher_portal';
-    console.log('No DATABASE_URL provided, using default local PostgreSQL');
-}
-
-console.log('Attempting to connect to PostgreSQL...');
-const sequelize = new Sequelize(DATABASE_URL, {
-    dialect: 'postgres',
-    logging: false, // Set to console.log to see SQL queries
-    pool: {
-        max: 5,
-        min: 0,
-        acquire: 30000,
-        idle: 10000
+// Test database connection
+pool.query('SELECT NOW()', (err, res) => {
+    if (err) {
+        console.error('Database connection error:', err);
+    } else {
+        console.log('Database connected successfully');
     }
 });
-
-// Initialize User model
-const UserModel = require('./User')(sequelize);
-
-// Database connection and sync
-sequelize.authenticate()
-.then(() => {
-    console.log('Connected to PostgreSQL successfully');
-    return sequelize.sync({ alter: true }); // Use alter: true to update tables without dropping
-})
-.then(() => {
-    console.log('Database tables synchronized');
-})
-.catch((error) => {
-    console.error('PostgreSQL connection error:', error);
-    console.error('Please make sure PostgreSQL is running or provide a valid DATABASE_URL environment variable');
-});
-
-// Make User model available to routes
-app.locals.User = UserModel;
-
-// Import routes
-const authRoutes = require('./auth');
 
 // Routes
-app.use('/api', authRoutes);
 
-// Serve static files
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'homepage.html'));
-});
+// Registration endpoint
+app.post('/api/register', async (req, res) => {
+    try {
+        const { username, email, password, userType } = req.body;
 
-// Serve login/register page
-app.get('/auth', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
+        // Validation
+        if (!username || !email || !password || !userType) {
+            return res.status(400).json({ 
+                success: false, 
+                message: 'All fields are required' 
+            });
+        }
 
-// Serve student dashboard
-app.get('/student-dashboard', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dashboard.html'));
-});
+        if (!['student', 'teacher', 'sponsor'].includes(userType)) {
+            return res.status(400).json({ 
+                success: false, 
+                message: 'Invalid user type' 
+            });
+        }
 
-// Serve teacher dashboard
-app.get('/teacher-dashboard', (req, res) => {
-    res.sendFile(path.join(__dirname, 'teacher-dashboard.html'));
-});
+        if (password.length < 6) {
+            return res.status(400).json({ 
+                success: false, 
+                message: 'Password must be at least 6 characters long' 
+            });
+        }
 
-// Serve about us page
-app.get('/about-us', (req, res) => {
-    res.sendFile(path.join(__dirname, 'about-us.html'));
-});
+        // Check if user already exists
+        const existingUser = await pool.query(
+            'SELECT * FROM users WHERE username = $1 OR email = $2',
+            [username, email]
+        );
 
-// Serve static files only for valid file extensions
-app.get('/*', (req, res) => {
-    const filePath = path.join(__dirname, req.path);
-    const extname = path.extname(req.path);
-    
-    // Only serve files with extensions (like .css, .js, .png, etc.)
-    if (extname) {
-        res.sendFile(filePath, (err) => {
-            if (err) {
-                res.status(404).send('File not found');
-            }
+        if (existingUser.rows.length > 0) {
+            return res.status(400).json({ 
+                success: false, 
+                message: 'Username or email already exists' 
+            });
+        }
+
+        // Hash password
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        // Insert new user
+        const newUser = await pool.query(
+            'INSERT INTO users (username, email, password, user_type) VALUES ($1, $2, $3, $4) RETURNING id, username, email, user_type, created_at',
+            [username, email, hashedPassword, userType]
+        );
+
+        res.status(201).json({
+            success: true,
+            message: 'User registered successfully',
+            user: newUser.rows[0]
         });
-    } else {
-        // For routes without extensions, redirect to homepage
-        res.redirect('/');
+
+    } catch (error) {
+        console.error('Registration error:', error);
+        res.status(500).json({ 
+            success: false, 
+            message: 'Server error during registration' 
+        });
     }
 });
 
+// Login endpoint
+app.post('/api/login', async (req, res) => {
+    try {
+        const { usernameEmail, password } = req.body;
+
+        // Validation
+        if (!usernameEmail || !password) {
+            return res.status(400).json({ 
+                success: false, 
+                message: 'Username/email and password are required' 
+            });
+        }
+
+        // Find user by username or email
+        const userResult = await pool.query(
+            'SELECT * FROM users WHERE username = $1 OR email = $1',
+            [usernameEmail]
+        );
+
+        if (userResult.rows.length === 0) {
+            return res.status(401).json({ 
+                success: false, 
+                message: 'Invalid credentials' 
+            });
+        }
+
+        const user = userResult.rows[0];
+
+        // Check password
+        const passwordMatch = await bcrypt.compare(password, user.password);
+
+        if (!passwordMatch) {
+            return res.status(401).json({ 
+                success: false, 
+                message: 'Invalid credentials' 
+            });
+        }
+
+        // Login successful - return user data (excluding password)
+        const { password: _, ...userData } = user;
+
+        res.json({
+            success: true,
+            message: 'Login successful',
+            user: userData
+        });
+
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).json({ 
+            success: false, 
+            message: 'Server error during login' 
+        });
+    }
+});
+
+// Get all users (for testing - returns only username for easy rendering)
+app.get('/api/users', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT username FROM users ORDER BY created_at DESC');
+        res.json({
+            success: true,
+            users: result.rows
+        });
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        res.status(500).json({ 
+            success: false, 
+            message: 'Server error fetching users' 
+        });
+    }
+});
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+    res.json({ status: 'OK', message: 'Server is running' });
+});
+
+// Start server
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on http://0.0.0.0:${PORT}`);
 });
+
+module.exports = app;
