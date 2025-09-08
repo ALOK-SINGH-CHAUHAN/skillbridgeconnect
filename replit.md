@@ -10,9 +10,16 @@ Preferred communication style: Simple, everyday language.
 
 ## System Architecture
 
-### Frontend Architecture
-The application follows a traditional client-side architecture using vanilla HTML, CSS, and JavaScript. This approach was chosen for simplicity and direct control over the user experience without the overhead of frameworks. The structure includes:
+### Full-Stack Architecture
+The application is a full-stack web platform built with modern technologies:
 
+**Backend:**
+- **Express.js Server**: RESTful API with user authentication endpoints
+- **PostgreSQL Database**: Production database with fallback demo mode for development
+- **Security Features**: Bcrypt password hashing, CORS protection, input validation
+- **API Endpoints**: User registration, login, health checks, and user management
+
+**Frontend:**
 - **Static HTML Structure**: Clean semantic markup with a focus on accessibility and SEO
 - **CSS-based Styling**: Modern CSS with gradient backgrounds, flexbox layouts, and responsive design principles
 - **Vanilla JavaScript**: Event-driven interactions with DOM manipulation for enhanced user experience
@@ -37,12 +44,25 @@ The interface employs a dark theme aesthetic with:
 
 ## External Dependencies
 
-Currently, the application has minimal external dependencies:
+### Backend Dependencies
+- **express**: Web application framework for Node.js
+- **cors**: Cross-Origin Resource Sharing middleware
+- **bcrypt**: Password hashing library for security
+- **pg**: PostgreSQL client for database operations
+- **dotenv**: Environment variable management
 
 ### Frontend Dependencies
 - **Fonts**: Arial fallback font family (system fonts)
 - **No External Libraries**: Pure vanilla JavaScript implementation
 - **No CSS Frameworks**: Custom CSS implementation
+
+## Current Setup Status
+- ✅ **Server Running**: Express.js server successfully running on port 5000
+- ✅ **Dependencies Installed**: All Node.js packages installed via npm
+- ✅ **Database Ready**: PostgreSQL support configured with demo mode fallback
+- ✅ **Frontend Accessible**: Static files served and website fully functional
+- ✅ **Deployment Configured**: Autoscale deployment setup for production
+- ✅ **Host Configuration**: Server properly configured for Replit environment (0.0.0.0:5000)
 
 ### Future Integration Points
 The current architecture is designed to accommodate future integrations:

@@ -1,0 +1,14 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Connection nodes -->
+  <circle cx="16" cy="6" r="2" fill="#ffffff"/>
+  <circle cx="8" cy="18" r="2" fill="#ffffff"/>
+  <circle cx="24" cy="18" r="2" fill="#ffffff"/>
+  <circle cx="16" cy="18" r="2" fill="#667eea"/>
+  
+  <!-- Connection lines -->
+  <line x1="16" y1="8" x2="10" y2="16" stroke="#ffffff" stroke-width="1.5"/>
+  <line x1="16" y1="8" x2="22" y2="16" stroke="#ffffff" stroke-width="1.5"/>
+  
+  <!-- Bridge arc -->
+  <path d="M 8 22 Q 16 26 24 22" stroke="#667eea" stroke-width="2.5" fill="none"/>
+</svg>

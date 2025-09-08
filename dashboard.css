@@ -135,28 +135,6 @@ body {
     gap: 16px;
 }
 
-.google-form-btn {
-    background: var(--gradient-blue);
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: var(--radius-pill);
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition-normal);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.google-form-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-glow);
-    color: white;
-    text-decoration: none;
-}
 
 .user-profile {
     width: 36px;

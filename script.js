@@ -16,6 +16,59 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Counter animation for hero stats
+    function animateCounters() {
+        const counters = document.querySelectorAll('.stat-number');
+        
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            const duration = 2000; // 2 seconds
+            const increment = target / (duration / 16); // 60fps
+            let current = 0;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                counter.textContent = Math.floor(current).toLocaleString();
+            }, 16);
+        });
+    }
+
+    // Start counter animation after delay
+    setTimeout(() => {
+        if (document.querySelector('.stat-number')) {
+            animateCounters();
+        }
+    }, 2500);
+
+    // Typing effect for hero subheading
+    function typeText() {
+        const typingElement = document.querySelector('.typing-text');
+        if (!typingElement) return;
+        
+        const text = typingElement.textContent;
+        typingElement.textContent = '';
+        typingElement.style.opacity = '1';
+        
+        let i = 0;
+        const typeInterval = setInterval(() => {
+            if (i < text.length) {
+                typingElement.textContent += text.charAt(i);
+                i++;
+            } else {
+                clearInterval(typeInterval);
+            }
+        }, 50);
+    }
+
+    // Start typing effect after delay
+    setTimeout(() => {
+        typeText();
+    }, 1500);
+
     // Contact form handling
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
