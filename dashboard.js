@@ -26,6 +26,9 @@ function initializeDashboard() {
         
         if (userNameElement) userNameElement.textContent = user.username;
         if (teacherUserNameElement) teacherUserNameElement.textContent = user.username;
+        
+        const sponsorUserNameElement = document.getElementById('sponsorUserName');
+        if (sponsorUserNameElement) sponsorUserNameElement.textContent = user.username;
         if (userInitialsElement) userInitialsElement.textContent = user.username.charAt(0).toUpperCase();
     }
     
@@ -42,6 +45,8 @@ function initializeDashboard() {
     // Initialize dashboard based on user type
     if (user.user_type === 'teacher') {
         initializeTeacherDashboard();
+    } else if (user.user_type === 'sponsor') {
+        initializeSponsorDashboard();
     }
 }
 
@@ -102,7 +107,7 @@ function initializeNavigation() {
     if (settingsBtn) {
         settingsBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            showNotification('Settings feature coming soon!', 'info');
+            openSettingsModal();
         });
     }
 }
@@ -165,12 +170,15 @@ function initializeCourseToggle() {
     });
 }
 
-// Initialize streak calendar
+// Initialize streak calendar with color legend
 function initializeStreak() {
     const calendarGrid = document.getElementById('calendarGrid');
     const calendarMonth = document.getElementById('calendarMonth');
     const prevMonth = document.getElementById('prevMonth');
     const nextMonth = document.getElementById('nextMonth');
+    
+    // Add color legend if not exists
+    addStreakLegend();
     
     let currentDate = new Date();
     
@@ -223,10 +231,16 @@ function initializeStreak() {
             
             if (dayDate.toDateString() === today.toDateString()) {
                 dayDiv.classList.add('today');
+                dayDiv.innerHTML = `${day}<div class="day-indicator">📚</div>`;
             } else if (day % 3 === 0 && day <= today.getDate() && month === today.getMonth()) {
                 dayDiv.classList.add('streak');
+                dayDiv.innerHTML = `${day}<div class="day-indicator">🔥</div>`;
             } else if (day % 7 === 0 && day <= today.getDate() && month === today.getMonth()) {
                 dayDiv.classList.add('missed');
+                dayDiv.innerHTML = `${day}<div class="day-indicator">💔</div>`;
+            } else if (day % 4 === 0 && day <= today.getDate() && month === today.getMonth()) {
+                dayDiv.classList.add('perfect');
+                dayDiv.innerHTML = `${day}<div class="day-indicator">⭐</div>`;
             }
             
             calendarGrid.appendChild(dayDiv);
@@ -246,6 +260,94 @@ function initializeStreak() {
     
     // Initialize calendar
     generateCalendar(currentDate);
+    
+    // Settings modal event listeners
+    setupSettingsModal();
+}
+
+// Add streak color legend
+function addStreakLegend() {
+    const streakPage = document.getElementById('streakPage');
+    const existingLegend = document.querySelector('.streak-legend');
+    
+    if (!existingLegend && streakPage) {
+        const legendHTML = `
+            <div class="streak-legend">
+                <h4 class="legend-title">
+                    <i class="fas fa-info-circle"></i>
+                    Streak Color Guide
+                </h4>
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <div class="legend-color today"></div>
+                        <span class="legend-text">
+                            <strong>Today</strong> - Current day (Blue) 📚
+                        </span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color streak"></div>
+                        <span class="legend-text">
+                            <strong>Learning Day</strong> - Completed lessons (Green) 🔥
+                        </span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color perfect"></div>
+                        <span class="legend-text">
+                            <strong>Perfect Day</strong> - Exceeded goals (Gold) ⭐
+                        </span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color missed"></div>
+                        <span class="legend-text">
+                            <strong>Missed Day</strong> - No activity (Red) 💔
+                        </span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color inactive"></div>
+                        <span class="legend-text">
+                            <strong>Upcoming</strong> - Future days (Gray)
+                        </span>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        const calendarContainer = streakPage.querySelector('.streak-calendar');
+        if (calendarContainer) {
+            calendarContainer.insertAdjacentHTML('afterend', legendHTML);
+        }
+    }
+}
+
+// Setup settings modal event listeners
+function setupSettingsModal() {
+    const modalClose = document.getElementById('modalClose');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const saveSettings = document.getElementById('saveSettings');
+    const resetSettings = document.getElementById('resetSettings');
+    
+    if (modalClose) {
+        modalClose.addEventListener('click', closeSettingsModal);
+    }
+    
+    if (modalOverlay) {
+        modalOverlay.addEventListener('click', closeSettingsModal);
+    }
+    
+    if (saveSettings) {
+        saveSettings.addEventListener('click', saveUserSettings);
+    }
+    
+    if (resetSettings) {
+        resetSettings.addEventListener('click', resetSettings);
+    }
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeSettingsModal();
+        }
+    });
 }
 
 // Initialize catalogue functionality
@@ -277,6 +379,13 @@ function initializeCatalogue() {
     
     // Initialize course toggle when courses page is accessed
     setTimeout(initializeCourseToggle, 100);
+    
+    // Setup settings modal after DOM is ready
+    setTimeout(setupSettingsModal, 200);
+    
+    // Setup universal logout and settings functionality
+    setupUniversalLogout();
+    setupUniversalSettings();
 }
 
 // Load recent courses data
@@ -347,8 +456,9 @@ function loadActiveCourses() {
                     </div>
                     <span class="progress-text">${course.progress}% Complete</span>
                 </div>
-                <div class="course-coins" style="margin-top: 1rem; color: var(--accent-warning);">
-                    <i class="fas fa-coins"></i> ${course.coins} coins required
+                <div class="course-coins" style="margin-top: 1rem; color: var(--accent-green); display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-gift" style="color: var(--accent-green);"></i>
+                    <span style="font-weight: 600;">Reward: ${course.coins} coins</span>
                 </div>
             </div>
         </div>
@@ -552,7 +662,82 @@ function loadUserData() {
     // Load user-specific dashboard
     if (user.user_type === 'teacher') {
         switchToTeacherDashboard();
+    } else if (user.user_type === 'sponsor') {
+        switchToSponsorDashboard();
     }
+}
+
+// Settings Modal Functions
+function openSettingsModal() {
+    const modal = document.getElementById('settingsModal');
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        loadUserSettings();
+    }
+}
+
+function closeSettingsModal() {
+    const modal = document.getElementById('settingsModal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+}
+
+function loadUserSettings() {
+    const user = JSON.parse(localStorage.getItem('skillbridge_user') || '{}');
+    const displayNameInput = document.getElementById('displayName');
+    if (displayNameInput && user.username) {
+        displayNameInput.value = user.username;
+    }
+}
+
+function saveUserSettings() {
+    const displayName = document.getElementById('displayName').value;
+    const emailNotifications = document.getElementById('emailNotifications').checked;
+    const theme = document.getElementById('themeSelect').value;
+    const animations = document.getElementById('animationsToggle').checked;
+    const courseUpdates = document.getElementById('courseUpdates').checked;
+    const achievementAlerts = document.getElementById('achievementAlerts').checked;
+    
+    const settings = {
+        displayName,
+        emailNotifications,
+        theme,
+        animations,
+        courseUpdates,
+        achievementAlerts
+    };
+    
+    localStorage.setItem('skillbridge_settings', JSON.stringify(settings));
+    
+    // Update user data if display name changed
+    if (displayName) {
+        let user = JSON.parse(localStorage.getItem('skillbridge_user') || '{}');
+        user.username = displayName;
+        localStorage.setItem('skillbridge_user', JSON.stringify(user));
+        
+        // Update UI elements
+        const userNameElements = document.querySelectorAll('#userName, #teacherUserName');
+        userNameElements.forEach(el => el.textContent = displayName);
+        const userInitials = document.getElementById('userInitials');
+        if (userInitials) userInitials.textContent = displayName.charAt(0).toUpperCase();
+    }
+    
+    showNotification('Settings saved successfully!', 'success');
+    closeSettingsModal();
+}
+
+function resetSettings() {
+    localStorage.removeItem('skillbridge_settings');
+    document.getElementById('displayName').value = '';
+    document.getElementById('emailNotifications').checked = true;
+    document.getElementById('themeSelect').value = 'dark';
+    document.getElementById('animationsToggle').checked = true;
+    document.getElementById('courseUpdates').checked = true;
+    document.getElementById('achievementAlerts').checked = true;
+    showNotification('Settings reset to default', 'info');
 }
 
 // Enhanced notification system
@@ -775,4 +960,329 @@ function animateNumber(element, target) {
     };
     
     requestAnimationFrame(updateNumber);
+}
+
+// Sponsor Dashboard Functions
+function initializeSponsorDashboard() {
+    loadSponsorStats();
+    loadRecentDonations();
+    loadSponsoredStudents();
+    loadImpactData();
+    setupDonationModal();
+}
+
+function switchToSponsorDashboard() {
+    const studentDashboard = document.getElementById('dashboardPage');
+    const sponsorDashboard = document.getElementById('sponsorDashboardPage');
+    
+    if (studentDashboard && sponsorDashboard) {
+        studentDashboard.style.display = 'none';
+        studentDashboard.classList.remove('active');
+        
+        sponsorDashboard.style.display = 'block';
+        sponsorDashboard.classList.add('active');
+    }
+}
+
+function loadSponsorStats() {
+    // Animate sponsor stats with realistic numbers
+    animateNumber(document.getElementById('totalDonated'), 2450, true, '$');
+    animateNumber(document.getElementById('studentsSupported'), 18);
+    animateNumber(document.getElementById('coursesSponsored'), 24);
+    
+    // Set sponsor level based on donation amount
+    const totalAmount = 2450;
+    let level = 'Bronze';
+    if (totalAmount >= 5000) level = 'Platinum';
+    else if (totalAmount >= 2000) level = 'Gold';
+    else if (totalAmount >= 500) level = 'Silver';
+    
+    const levelElement = document.getElementById('sponsorLevel');
+    if (levelElement) levelElement.textContent = level;
+}
+
+function loadRecentDonations() {
+    const donations = [
+        {
+            id: 'D001',
+            amount: 100,
+            date: '2024-12-01',
+            type: 'General Fund',
+            recipient: 'SkillBridge Connect',
+            status: 'completed',
+            impact: '2 students enrolled in new courses'
+        },
+        {
+            id: 'D002',
+            amount: 250,
+            date: '2024-11-28',
+            type: 'Student Sponsorship',
+            recipient: 'Sarah Chen',
+            status: 'completed',
+            impact: 'Completed JavaScript Fundamentals'
+        },
+        {
+            id: 'D003',
+            amount: 50,
+            date: '2024-11-25',
+            type: 'Course Development',
+            recipient: 'React Development Course',
+            status: 'processing',
+            impact: 'Course 80% developed'
+        }
+    ];
+    
+    const container = document.getElementById('recentDonationsGrid');
+    if (container) {
+        container.innerHTML = donations.map(donation => `
+            <div class="donation-card">
+                <div class="donation-header">
+                    <div class="donation-amount">$${donation.amount}</div>
+                    <div class="donation-status ${donation.status}">
+                        <i class="fas ${donation.status === 'completed' ? 'fa-check-circle' : 'fa-clock'}"></i>
+                        ${donation.status === 'completed' ? 'Completed' : 'Processing'}
+                    </div>
+                </div>
+                <div class="donation-details">
+                    <div class="donation-type">${donation.type}</div>
+                    <div class="donation-recipient">
+                        <i class="fas ${
+                            donation.type === 'General Fund' ? 'fa-globe' : 
+                            donation.type === 'Student Sponsorship' ? 'fa-user-graduate' : 'fa-book'
+                        }"></i>
+                        ${donation.recipient}
+                    </div>
+                    <div class="donation-date">${new Date(donation.date).toLocaleDateString()}</div>
+                </div>
+                <div class="donation-impact">
+                    <i class="fas fa-heart"></i>
+                    <span>${donation.impact}</span>
+                </div>
+            </div>
+        `).join('');
+    }
+}
+
+function loadSponsoredStudents() {
+    const students = [
+        {
+            name: 'Sarah Chen',
+            course: 'Advanced JavaScript',
+            progress: 85,
+            avatar: 'SC',
+            joined: '2024-10-15',
+            achievements: ['Certificate Earned', 'Top Performer']
+        },
+        {
+            name: 'Marcus Rodriguez',
+            course: 'React Development',
+            progress: 60,
+            avatar: 'MR',
+            joined: '2024-11-01',
+            achievements: ['Quick Learner']
+        },
+        {
+            name: 'Emily Watson',
+            course: 'Node.js Backend',
+            progress: 45,
+            avatar: 'EW',
+            joined: '2024-11-20',
+            achievements: ['Consistent Progress']
+        }
+    ];
+    
+    const container = document.getElementById('sponsoredStudentsGrid');
+    if (container) {
+        container.innerHTML = students.map(student => `
+            <div class="student-card">
+                <div class="student-header">
+                    <div class="student-avatar">${student.avatar}</div>
+                    <div class="student-info">
+                        <h4 class="student-name">${student.name}</h4>
+                        <p class="student-course">${student.course}</p>
+                    </div>
+                </div>
+                <div class="student-progress">
+                    <div class="progress-info">
+                        <span class="progress-label">Progress</span>
+                        <span class="progress-percentage">${student.progress}%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${student.progress}%"></div>
+                    </div>
+                </div>
+                <div class="student-achievements">
+                    ${student.achievements.map(achievement => 
+                        `<span class="achievement-badge">
+                            <i class="fas fa-star"></i>
+                            ${achievement}
+                        </span>`
+                    ).join('')}
+                </div>
+                <div class="student-meta">
+                    <span class="join-date">Joined: ${new Date(student.joined).toLocaleDateString()}</span>
+                </div>
+            </div>
+        `).join('');
+    }
+}
+
+function loadImpactData() {
+    // This would typically come from analytics API
+    // For now, we'll use the existing progress circle initialization
+    setTimeout(() => {
+        initializeProgressCircle();
+    }, 500);
+}
+
+// Donation Modal Functions
+function setupDonationModal() {
+    const makeDonationBtn = document.getElementById('makeDonationBtn');
+    const donationModal = document.getElementById('donationModal');
+    const donationModalClose = document.getElementById('donationModalClose');
+    const donationModalOverlay = document.getElementById('donationModalOverlay');
+    const cancelDonation = document.getElementById('cancelDonation');
+    const processDonation = document.getElementById('processDonation');
+    const amountBtns = document.querySelectorAll('.amount-btn');
+    const customAmountInput = document.getElementById('customAmount');
+    const summaryAmount = document.getElementById('donationSummaryAmount');
+    
+    if (makeDonationBtn) {
+        makeDonationBtn.addEventListener('click', openDonationModal);
+    }
+    
+    if (donationModalClose) {
+        donationModalClose.addEventListener('click', closeDonationModal);
+    }
+    
+    if (donationModalOverlay) {
+        donationModalOverlay.addEventListener('click', closeDonationModal);
+    }
+    
+    if (cancelDonation) {
+        cancelDonation.addEventListener('click', closeDonationModal);
+    }
+    
+    // Amount selection
+    amountBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            amountBtns.forEach(b => b.classList.remove('selected'));
+            this.classList.add('selected');
+            customAmountInput.value = '';
+            updateDonationSummary(this.dataset.amount);
+        });
+    });
+    
+    if (customAmountInput) {
+        customAmountInput.addEventListener('input', function() {
+            amountBtns.forEach(b => b.classList.remove('selected'));
+            updateDonationSummary(this.value || 0);
+        });
+    }
+    
+    if (processDonation) {
+        processDonation.addEventListener('click', processDonationRequest);
+    }
+    
+    // Initialize with default amount
+    if (amountBtns.length > 0) {
+        amountBtns[0].classList.add('selected');
+        updateDonationSummary(amountBtns[0].dataset.amount);
+    }
+}
+
+function openDonationModal() {
+    const modal = document.getElementById('donationModal');
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeDonationModal() {
+    const modal = document.getElementById('donationModal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+}
+
+function updateDonationSummary(amount) {
+    const summaryElement = document.getElementById('donationSummaryAmount');
+    if (summaryElement) {
+        summaryElement.textContent = `$${amount}`;
+    }
+}
+
+function processDonationRequest() {
+    const selectedType = document.querySelector('input[name="donationType"]:checked')?.value;
+    const selectedAmount = document.querySelector('.amount-btn.selected')?.dataset.amount || 
+                          document.getElementById('customAmount')?.value;
+    const message = document.getElementById('donationMessage')?.value;
+    
+    if (!selectedAmount || selectedAmount <= 0) {
+        showNotification('Please select a valid donation amount', 'error');
+        return;
+    }
+    
+    // Simulate donation processing
+    showNotification('Processing your donation...', 'info');
+    
+    setTimeout(() => {
+        showNotification(`Thank you for your $${selectedAmount} donation! Your generosity makes a real difference.`, 'success');
+        closeDonationModal();
+        
+        // Refresh sponsor stats to reflect new donation
+        setTimeout(() => {
+            loadSponsorStats();
+            loadRecentDonations();
+        }, 1000);
+    }, 2000);
+}
+
+// Fix logout functionality to work in all dashboards
+function setupUniversalLogout() {
+    const logoutBtns = document.querySelectorAll('#logoutBtn, .logout-btn');
+    logoutBtns.forEach(btn => {
+        if (btn) {
+            btn.removeEventListener('click', handleLogout); // Remove any existing listeners
+            btn.addEventListener('click', handleLogout);
+        }
+    });
+}
+
+function handleLogout(e) {
+    e.preventDefault();
+    
+    if (confirm('Are you sure you want to logout?')) {
+        showNotification('Logging out...', 'info');
+        
+        // Clear all user data
+        localStorage.removeItem('skillbridge_user');
+        localStorage.removeItem('userData');
+        localStorage.removeItem('user');
+        
+        // Clear any session data
+        sessionStorage.clear();
+        
+        setTimeout(() => {
+            window.location.href = 'auth.html';
+        }, 1000);
+    }
+}
+
+// Enhanced settings modal setup for all dashboard types
+function setupUniversalSettings() {
+    const settingsBtns = document.querySelectorAll('#settingsBtn, .settings-btn');
+    settingsBtns.forEach(btn => {
+        if (btn) {
+            btn.removeEventListener('click', handleSettings); // Remove any existing listeners
+            btn.addEventListener('click', handleSettings);
+        }
+    });
+}
+
+function handleSettings(e) {
+    e.preventDefault();
+    openSettingsModal();
 }

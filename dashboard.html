@@ -260,6 +260,126 @@
                 </div>
             </div>
             
+            <!-- Sponsor Dashboard (Hidden by default) -->
+            <div class="page-content" id="sponsorDashboardPage" style="display: none;">
+                <div class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-heart"></i>
+                        Sponsor Dashboard
+                    </h1>
+                    <div class="sponsor-actions">
+                        <button class="btn-primary" id="makeDonationBtn">
+                            <i class="fas fa-gift"></i>
+                            Make Donation
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="welcome-section">
+                    <div class="greeting-card">
+                        <h2 class="greeting">Welcome back, <span id="sponsorUserName">Sponsor</span>!</h2>
+                        <p class="greeting-subtitle">Thank you for supporting education and making dreams come true</p>
+                    </div>
+                    
+                    <div class="sponsor-stats-overview">
+                        <div class="sponsor-stats-grid">
+                            <div class="stat-item donation-stat">
+                                <div class="stat-icon">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-number" id="totalDonated">$2,450</div>
+                                    <div class="stat-label">Total Donated</div>
+                                </div>
+                            </div>
+                            <div class="stat-item students-stat">
+                                <div class="stat-icon">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-number" id="studentsSupported">18</div>
+                                    <div class="stat-label">Students Supported</div>
+                                </div>
+                            </div>
+                            <div class="stat-item impact-stat">
+                                <div class="stat-icon">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-number" id="coursesSponsored">24</div>
+                                    <div class="stat-label">Courses Sponsored</div>
+                                </div>
+                            </div>
+                            <div class="stat-item badge-stat">
+                                <div class="stat-icon">
+                                    <i class="fas fa-trophy"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-number" id="sponsorLevel">Gold</div>
+                                    <div class="stat-label">Sponsor Level</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Donations Section -->
+                <section class="recent-donations">
+                    <h3 class="section-title">
+                        <i class="fas fa-history"></i>
+                        Recent Donations
+                    </h3>
+                    <div class="donations-grid" id="recentDonationsGrid">
+                        <!-- Recent donations will be loaded here -->
+                    </div>
+                </section>
+
+                <!-- Sponsored Students Section -->
+                <section class="sponsored-students">
+                    <h3 class="section-title">
+                        <i class="fas fa-users"></i>
+                        Students You're Supporting
+                    </h3>
+                    <div class="students-grid" id="sponsoredStudentsGrid">
+                        <!-- Sponsored students will be loaded here -->
+                    </div>
+                </section>
+
+                <!-- Impact Tracking -->
+                <section class="impact-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-chart-line"></i>
+                        Your Impact
+                    </h3>
+                    <div class="impact-grid">
+                        <div class="impact-card">
+                            <div class="impact-visual">
+                                <div class="progress-circle" data-progress="73">
+                                    <div class="progress-value">73%</div>
+                                </div>
+                            </div>
+                            <div class="impact-info">
+                                <h4>Course Completion Rate</h4>
+                                <p>Students you sponsor have a 73% completion rate, 23% above average!</p>
+                            </div>
+                        </div>
+                        <div class="impact-card">
+                            <div class="impact-visual">
+                                <div class="achievement-badges">
+                                    <span class="badge gold">🏆</span>
+                                    <span class="badge silver">🥈</span>
+                                    <span class="badge bronze">🥉</span>
+                                </div>
+                            </div>
+                            <div class="impact-info">
+                                <h4>Student Achievements</h4>
+                                <p>Your support has helped students earn 45 certificates and achievements</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
             <!-- Teacher Dashboard (Hidden by default) -->
             <div class="page-content" id="teacherDashboardPage" style="display: none;">
                 <div class="page-header">
@@ -306,6 +426,177 @@
         </main>
     </div>
 
+    <!-- Donation Modal -->
+    <div class="donation-modal" id="donationModal">
+        <div class="modal-overlay" id="donationModalOverlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-gift"></i>
+                    Make a Donation
+                </h3>
+                <button class="modal-close" id="donationModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="donation-form">
+                    <div class="donation-type-section">
+                        <h4 class="section-title">Choose Donation Type</h4>
+                        <div class="donation-type-options">
+                            <label class="donation-option">
+                                <input type="radio" name="donationType" value="general" checked>
+                                <div class="option-card">
+                                    <div class="option-icon">🌍</div>
+                                    <div class="option-content">
+                                        <h5>General Fund</h5>
+                                        <p>Support the overall mission</p>
+                                    </div>
+                                </div>
+                            </label>
+                            <label class="donation-option">
+                                <input type="radio" name="donationType" value="student">
+                                <div class="option-card">
+                                    <div class="option-icon">🎓</div>
+                                    <div class="option-content">
+                                        <h5>Sponsor a Student</h5>
+                                        <p>Directly support a learner</p>
+                                    </div>
+                                </div>
+                            </label>
+                            <label class="donation-option">
+                                <input type="radio" name="donationType" value="course">
+                                <div class="option-card">
+                                    <div class="option-icon">📚</div>
+                                    <div class="option-content">
+                                        <h5>Course Development</h5>
+                                        <p>Fund new course creation</p>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="donation-amount-section">
+                        <h4 class="section-title">Donation Amount</h4>
+                        <div class="amount-options">
+                            <button class="amount-btn" data-amount="25">$25</button>
+                            <button class="amount-btn" data-amount="50">$50</button>
+                            <button class="amount-btn" data-amount="100">$100</button>
+                            <button class="amount-btn" data-amount="250">$250</button>
+                        </div>
+                        <div class="custom-amount">
+                            <label for="customAmount">Custom Amount</label>
+                            <div class="amount-input-wrapper">
+                                <span class="currency-symbol">$</span>
+                                <input type="number" id="customAmount" placeholder="0" min="1" max="10000">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="donation-message-section">
+                        <h4 class="section-title">Optional Message</h4>
+                        <textarea id="donationMessage" placeholder="Add a message of encouragement for students..." rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="donation-summary">
+                    <span class="summary-text">Donation Amount: <strong id="donationSummaryAmount">$25</strong></span>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-secondary" id="cancelDonation">Cancel</button>
+                    <button class="btn-primary" id="processDonation">
+                        <i class="fas fa-heart"></i>
+                        Donate Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="settings-modal" id="settingsModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </h3>
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-section">
+                    <h4 class="settings-section-title">
+                        <i class="fas fa-user"></i>
+                        Profile Settings
+                    </h4>
+                    <div class="setting-item">
+                        <label class="setting-label">Display Name</label>
+                        <input type="text" class="setting-input" id="displayName" placeholder="Enter your display name">
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">Email Notifications</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="emailNotifications" checked>
+                            <span class="toggle-slider"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h4 class="settings-section-title">
+                        <i class="fas fa-palette"></i>
+                        Appearance
+                    </h4>
+                    <div class="setting-item">
+                        <label class="setting-label">Theme</label>
+                        <select class="setting-select" id="themeSelect">
+                            <option value="dark">Dark Mode</option>
+                            <option value="light">Light Mode</option>
+                            <option value="auto">Auto</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">Animations</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="animationsToggle" checked>
+                            <span class="toggle-slider"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h4 class="settings-section-title">
+                        <i class="fas fa-bell"></i>
+                        Notifications
+                    </h4>
+                    <div class="setting-item">
+                        <label class="setting-label">Course Updates</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="courseUpdates" checked>
+                            <span class="toggle-slider"></span>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">Achievement Alerts</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="achievementAlerts" checked>
+                            <span class="toggle-slider"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="resetSettings">Reset to Default</button>
+                <button class="btn-primary" id="saveSettings">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Dashboard JS -->
     <script src="dashboard.js"></script>
     
@@ -322,6 +613,12 @@
                 document.getElementById('teacherDashboardPage').style.display = 'block';
                 document.getElementById('teacherDashboardPage').classList.add('active');
                 document.getElementById('teacherUserName').textContent = user.username || 'Teacher';
+            } else if (user && user.user_type === 'sponsor') {
+                // Show sponsor dashboard
+                document.getElementById('dashboardPage').style.display = 'none';
+                document.getElementById('sponsorDashboardPage').style.display = 'block';
+                document.getElementById('sponsorDashboardPage').classList.add('active');
+                document.getElementById('sponsorUserName').textContent = user.username || 'Sponsor';
             } else {
                 // Show student dashboard (default)
                 document.getElementById('userName').textContent = user.username || 'Student';
